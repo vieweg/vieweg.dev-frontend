@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useRef, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FaExclamation as ExclamationIcon } from "react-icons/fa";
 
@@ -8,15 +8,12 @@ export interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const cancelButtonRef = useRef<HTMLElement>(null);
-
   return (
     <Transition.Root show={props.showModal} as={Fragment}>
       <Dialog
         as="div"
         static
         className="fixed z-10 inset-0 overflow-y-auto"
-        initialFocus={cancelButtonRef}
         open={props.showModal}
         onClose={props.onClose}
       >
@@ -84,7 +81,6 @@ const Modal: React.FC<ModalProps> = (props) => {
                   Deactivate
                 </button>
                 <button
-                  ref={cancelButtonRef}
                   type="button"
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={props.onClose}
