@@ -1,4 +1,4 @@
-import React, { ComponentType, useCallback } from "react";
+import React, { ComponentType, useCallback, useEffect, useState } from "react";
 import { IconBaseProps } from "react-icons";
 import { FiLink2 } from "react-icons/fi";
 
@@ -7,30 +7,50 @@ export interface LinksBlockProps {
   cssClassTitle?: string;
   direction?: "column" | "row";
   showTitles?: boolean;
-  links: {
-    url: string;
-    title: string;
-    target?: "_blank" | "_self";
-    icon?: ComponentType<IconBaseProps>;
-    size?: number;
-    classCssLink?: string;
-    classCssIcon?: string;
-    classCssTitle?: string;
-  }[];
+  links: [
+    {
+      url: string;
+      title: string;
+      target?: "_blank" | "_self";
+      icon?: ComponentType<IconBaseProps>;
+      size?: number;
+      classCssLink?: string;
+      classCssIcon?: string;
+      classCssTitle?: string;
+    }
+  ];
 }
 
+const defaults = {
+  cssClassTitle: "text-center text-xl font-bold mb-2",
+  links: {
+    target: "_self",
+    icon: FiLink2,
+    size: 40,
+    classCssLink: "text-red-400",
+    classCssIcon: "text-red-400",
+    classCssTitle: "ml-2 align-bottom",
+  },
+};
+
 const LinksBlock: React.FC<LinksBlockProps> = (props) => {
-  const defaults = {
-    cssClassTitle: "text-center text-xl font-bold mb-2",
-    links: {
-      target: "_self",
-      icon: FiLink2,
-      size: 40,
-      classCssLink: "text-red-400",
-      classCssIcon: "text-red-400",
-      classCssTitle: "ml-2 align-bottom",
-    },
-  };
+  const [linksProps, setLinksProps] = useState<LinksBlockProps>(
+    {} as LinksBlockProps
+  );
+
+  useEffect(() => {
+    async function handleIcons(): Promise<void> {
+      if (props.links && props.links.length > 0) {
+        const linksFormatted = { ...props };
+        for await (const ln of linksFormatted.links) {
+          // eslint-disable-next-line
+          ln.icon = await require("react-icons/fa")[`${ln.icon}`];
+        }
+        setLinksProps({ ...linksFormatted });
+      }
+    }
+    handleIcons();
+  }, [props]);
 
   const cssClassBlock = useCallback(() => {
     if (props.direction && props.direction === "column") {
@@ -39,19 +59,25 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
     return "flex flex-row space-x-4 justify-center items-end";
   }, [props.direction]);
 
+  if (!linksProps.links || linksProps.links.length <= 0) {
+    return null;
+  }
+
   return (
     <div className="my-6 ">
-      {props.blockTitle && (
+      {linksProps.blockTitle && (
         <div
           className={
-            props.cssClassTitle ? props.cssClassTitle : defaults.cssClassTitle
+            linksProps.cssClassTitle
+              ? linksProps.cssClassTitle
+              : defaults.cssClassTitle
           }
         >
-          {props.blockTitle}
+          {linksProps.blockTitle}
         </div>
       )}
       <div className={cssClassBlock()}>
-        {props.links.map(
+        {linksProps.links.map(
           (
             {
               title,

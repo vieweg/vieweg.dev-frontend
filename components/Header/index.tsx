@@ -3,10 +3,10 @@ import Avatar, { AvatarProps } from "./../Avatar";
 import LinksBlock, { LinksBlockProps } from "../LinksBlock";
 
 export interface HeaderProps {
-  excerpt: string;
-  html: string;
-  avatar: AvatarProps;
-  links: LinksBlockProps;
+  excerpt?: string;
+  html?: string;
+  avatar?: AvatarProps | false;
+  links?: LinksBlockProps;
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
@@ -15,15 +15,17 @@ const Header: React.FC<HeaderProps> = (props) => {
       <div className="mx-auto w-5/6">
         <div className="flex flex-col md:flex-row">
           <div className="m-2 self-center">
-            <Avatar {...props.avatar} />
-            <LinksBlock {...props.links} />
+            {props.avatar && <Avatar {...props.avatar} />}
+            {props.links && <LinksBlock {...props.links} />}
           </div>
-          <div className="md:p-8">
-            <div
-              className="prose lg:prose-lg max-w-none prose-red"
-              dangerouslySetInnerHTML={{ __html: props.excerpt }}
-            ></div>
-          </div>
+          {props.excerpt && (
+            <div className="md:p-8">
+              <div
+                className="prose lg:prose-lg max-w-none prose-red"
+                dangerouslySetInnerHTML={{ __html: props.excerpt }}
+              ></div>
+            </div>
+          )}
         </div>
       </div>
     </div>
