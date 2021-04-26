@@ -1,6 +1,12 @@
-import React, { ComponentType, useCallback, useEffect, useState } from "react";
+import React, {
+  ComponentType,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { IconBaseProps } from "react-icons";
-import { FiLink2 } from "react-icons/fi";
+import * as fa from "react-icons/fa";
 
 export interface LinksBlockProps {
   blockTitle?: string;
@@ -25,7 +31,7 @@ const defaults = {
   cssClassTitle: "text-center text-xl font-bold mb-2",
   links: {
     target: "_self",
-    icon: FiLink2,
+    icon: fa["FaLink"],
     size: 40,
     classCssLink: "text-red-400",
     classCssIcon: "text-red-400",
@@ -43,8 +49,15 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
       if (props.links && props.links.length > 0) {
         const linksFormatted = { ...props };
         for await (const ln of linksFormatted.links) {
-          // eslint-disable-next-line
-          ln.icon = await require("react-icons/fa")[`${ln.icon}`];
+          if (
+            ln.icon &&
+            !isValidElement(ln.icon) &&
+            typeof ln.icon === "string"
+          ) {
+            // eslint-disable-next-line
+            ln.icon = fa[ln.icon];
+          }
+          //ln.icon = await require(`@react-icons/all-files/fa/${ln.icon}`);
         }
         setLinksProps({ ...linksFormatted });
       }

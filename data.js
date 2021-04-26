@@ -20,7 +20,7 @@ export const links = {
       {
         title: "Google",
         url: "http://www.google.com.br",
-        icon: 'FaGoogle',
+        icon: 'FaMapSigns',
         classCssIcon: "text-red-500 hover:text-red-700",
         size: 24,
         target: "_blank",
