@@ -19,10 +19,11 @@ export interface LinksBlockProps {
       title: string;
       target?: "_blank" | "_self";
       icon?: ComponentType<IconBaseProps>;
+      color?: string;
       size?: number;
+      classCssTitle?: string;
       classCssLink?: string;
       classCssIcon?: string;
-      classCssTitle?: string;
     }
   ];
 }
@@ -33,9 +34,10 @@ const defaults = {
     target: "_self",
     icon: fa["FaLink"],
     size: 40,
-    classCssLink: "text-red-400",
-    classCssIcon: "text-red-400",
+    color: "rgba(220,38,38, 1)",
     classCssTitle: "ml-2 align-bottom",
+    classCssLink: "text-red-400",
+    classCssIcon: "",
   },
 };
 
@@ -57,7 +59,6 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
             // eslint-disable-next-line
             ln.icon = fa[ln.icon];
           }
-          //ln.icon = await require(`@react-icons/all-files/fa/${ln.icon}`);
         }
         setLinksProps({ ...linksFormatted });
       }
@@ -97,6 +98,7 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
               url,
               icon: Icon = defaults.links.icon,
               size = defaults.links.size,
+              color = defaults.links.color,
               target = defaults.links.target,
               classCssLink = defaults.links.classCssLink,
               classCssIcon = defaults.links.classCssIcon,
@@ -112,7 +114,9 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
               className={classCssLink}
             >
               <div className="flex flex-row items-end">
-                {Icon && <Icon size={size} className={classCssIcon} />}
+                {Icon && (
+                  <Icon size={size} className={classCssIcon} color={color} />
+                )}
                 {props.showTitles && (
                   <span className={classCssTitle}>{title}</span>
                 )}
