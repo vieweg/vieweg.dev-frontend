@@ -4,38 +4,49 @@ import Image from "next/image";
 export interface AvatarProps {
   url: string;
   alt: string;
+  size?: number;
   newStories?: boolean | undefined;
   tag?: string | undefined;
   onCLick?: () => void;
 }
 
 const Avatar: React.FC<AvatarProps> = (props) => {
+  const size = props.size ? props.size : 320;
+
   return (
-    <div className="relative w-80 h-80 rounded-full overflow-hidden ">
+    <div
+      className="relative rounded-full overflow-hidden"
+      style={{ width: size, height: size }}
+    >
       {props.newStories ? (
         <button onClick={props.onCLick}>
           <div
             className="absolute bg-gradient-to-tr from-pink-700  to-blue-500 animate-spinSlow"
-            style={{ width: 320, height: 320 }}
+            style={{ width: size, height: size }}
           />
           <div
             className="absolute  rounded-full bg-white"
-            style={{ width: 308, height: 308, left: 6, top: 6 }}
+            style={{
+              width: size - size * 0.036,
+              height: size - size * 0.036,
+              left: size * 0.02,
+              top: size * 0.02,
+            }}
           />
           <div
             style={{
-              width: 300,
-              height: 300,
-              marginLeft: 10,
-              marginTop: 10,
+              width: size - size * 0.065,
+              height: size - size * 0.065,
+              marginLeft: size * 0.034,
+              marginTop: size * 0.034,
             }}
           >
             <Image
               className="rounded-full bg-gray-50"
               src={props.url}
               alt={props.alt}
-              width="300"
-              height="300"
+              width={size - size * 0.065}
+              height={size - size * 0.065}
             />
           </div>
         </button>
@@ -43,34 +54,41 @@ const Avatar: React.FC<AvatarProps> = (props) => {
         <>
           <div
             className="absolute bg-gradient-to-tr from-gray-100  to-gray-300"
-            style={{ width: 320, height: 320 }}
+            style={{ width: size, height: size }}
           />
           <div
             className="absolute  rounded-full bg-white"
-            style={{ width: 308, height: 308, left: 6, top: 6 }}
+            style={{
+              width: size - size * 0.036,
+              height: size - size * 0.036,
+              left: size * 0.02,
+              top: size * 0.02,
+            }}
           />
           <div
             style={{
-              width: 300,
-              height: 300,
-              marginLeft: 10,
-              marginTop: 10,
+              width: size - size * 0.065,
+              height: size - size * 0.065,
+              marginLeft: size * 0.034,
+              marginTop: size * 0.034,
             }}
           >
             <Image
               className="rounded-full bg-gray-50"
               src={props.url}
               alt={props.alt}
-              width="300"
-              height="300"
+              width={size - size * 0.065}
+              height={size - size * 0.065}
             />
           </div>
         </>
       )}
 
-      {props.tag && (
-        <div className="absolute bottom-0  bg-gradient-to-tl from-blue-300  to-blue-600 text-center text-white text-lg font-bold w-full p-3 transform -rotate-12 translate-x-6 -translate-y-6">
-          <span>{props.tag}</span>
+      {props.tag && size > 200 && (
+        <div className="absolute w-full h-1/4 -bottom-1 transform -rotate-6 bg-gradient-to-tl from-blue-300  to-indigo-600">
+          <div className="m-auto w-3/6 text-center text-white p-2 text-lg font-bold">
+            <span>{props.tag}</span>
+          </div>
         </div>
       )}
     </div>

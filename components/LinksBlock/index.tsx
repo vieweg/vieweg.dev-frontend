@@ -15,6 +15,7 @@ export interface LinksBlockProps {
   showTitles?: boolean;
   links: [
     {
+      id: string;
       url: string;
       title: string;
       target?: "_blank" | "_self";
@@ -92,25 +93,24 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
       )}
       <div className={cssClassBlock()}>
         {linksProps.links.map(
-          (
-            {
-              title,
-              url,
-              icon: Icon = defaults.links.icon,
-              size = defaults.links.size,
-              color = defaults.links.color,
-              target = defaults.links.target,
-              classCssLink = defaults.links.classCssLink,
-              classCssIcon = defaults.links.classCssIcon,
-              classCssTitle = defaults.links.classCssTitle,
-            },
-            key
-          ) => (
+          ({
+            id,
+            title,
+            url,
+            icon: Icon = defaults.links.icon,
+            size = defaults.links.size,
+            color = defaults.links.color,
+            target = defaults.links.target,
+            classCssLink = defaults.links.classCssLink,
+            classCssIcon = defaults.links.classCssIcon,
+            classCssTitle = defaults.links.classCssTitle,
+          }) => (
             <a
-              key={key}
+              key={id}
               title={title}
               href={url}
               target={target}
+              rel={target === "_blank" ? "noopener noreferrer" : ""}
               className={classCssLink}
             >
               <div className="flex flex-row items-end">

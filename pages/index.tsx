@@ -7,6 +7,8 @@ import Header from "./../components/Header";
 import { LinksBlockProps } from "../components/LinksBlock";
 import { AvatarProps } from "../components/Avatar";
 import Modal from "../components/Modal";
+import Menu from "../components/Menu";
+import { FaGithub } from "react-icons/fa";
 
 interface indexProps {
   user: {
@@ -36,24 +38,47 @@ const Home: React.FC = () => {
     <>
       <Head>
         <title>Welcome!</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <div>
+        <Menu />
         <Header
           avatar={avatar}
           html={data?.user.html}
           excerpt={data?.user.excerpt}
           links={data?.links}
         />
-        <Modal showModal={showModal} onClose={handleModal} />
-        <main>Conteudo</main>
 
-        <footer>
-          <a href="#" target="_blank" rel="noopener noreferrer">
-            Powered by Fixas
-          </a>
+        <main className="flex flex-row flex-1 justify-between my-28 text-center">
+          <div className="w-full sm:w-1/4 h-48 border border-solid border-gray-200 m-1.5 rounded">
+            box
+          </div>
+          <div className="w-5/6 sm:w-1/4 h-48 border border-solid border-gray-200 m-1.5 rounded">
+            box
+          </div>
+          <div className="w-5/6 sm:w-1/4  border border-solid border-gray-200 m-1.5 rounded">
+            box
+          </div>
+          <div className="w-5/6 sm:w-1/4  border border-solid border-gray-200 m-1.5 rounded">
+            box
+          </div>
+        </main>
+
+        <footer className="w-full">
+          <div className="text-center">
+            <a
+              href="https://github.com/vieweg/vieweg.dev"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <div className="flex flex-row w-auto m-auto justify-center whitespace-pre-wrap">
+                Get this code on <FaGithub />
+              </div>
+            </a>
+          </div>
         </footer>
       </div>
+      <Modal showModal={showModal} onClose={handleModal} />
     </>
   );
 };

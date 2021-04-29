@@ -11,8 +11,8 @@ export interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props) => {
   return (
-    <div className="bg-gray-50 shadow-md overflow-hidden">
-      <div className="mx-auto w-5/6">
+    <div className="bg-gray-50 shadow-md">
+      <div className="mx-auto w-5/6 pt-3">
         <div className="flex flex-col md:flex-row">
           <div className="m-2 self-center">
             {props.avatar && <Avatar {...props.avatar} />}
