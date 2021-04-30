@@ -66,15 +66,16 @@ const Home: React.FC = () => {
 
         <footer className="w-full">
           <div className="text-center">
-            <a
-              href="https://github.com/vieweg/vieweg.dev"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <div className="flex flex-row w-auto m-auto justify-center whitespace-pre-wrap">
-                Get this code on <FaGithub />
-              </div>
-            </a>
+            <div className="flex flex-row w-auto m-auto justify-center items-center whitespace-pre-wrap">
+              Get this code on{" "}
+              <a
+                href="https://github.com/vieweg/vieweg.dev"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <FaGithub />
+              </a>
+            </div>
           </div>
         </footer>
       </div>
