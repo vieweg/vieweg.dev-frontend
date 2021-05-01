@@ -12,6 +12,88 @@ export const user = {
   }
 }
 
+export const menu = {
+  data: {
+    title: "Rafael Vieweg",
+    urlLogo: "rv-logo.svg",
+    widthLogo:24,
+    heightLogo:32,
+    mainItems: [
+      {
+        id: 0,
+        title: "Solutions",
+        items: [
+          {
+            id: 1,
+            title: "Analytics",
+            description:
+              "Get a better understanding of where your traffic is coming from.",
+            href: "/admin",
+            svgIcon:
+              '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
+          },
+          {
+            id: 2,
+            title: "Engagement",
+            description:
+              "Speak directly to your customers in a more meaningful way.",
+            href: "https://www.google.com",
+          },
+          {
+            id: 3,
+            title: "Security",
+            description: "Your customers' data will be safe and secure.",
+            href: "#",
+          },
+        ],
+      },
+      {
+        id: 4,
+        title: "Pricing",
+        href: "#",
+      },
+      {
+        id: 5,
+        title: "Docs",
+        href: "#",
+      },
+      {
+        id: 6,
+        title: "More",
+        items: [
+          {
+            id: 7,
+            title: "Help Center",
+            description:
+              "Get all of your questions answered in our forums or contact support.",
+            href: "#",
+          },
+          {
+            id: 8,
+            title: "Guides",
+            description:
+              "Learn how to maximize our platform to get the most out of it.",
+            href: "#",
+          },
+          {
+            id: 9,
+            title: "Events",
+            description:
+              "See what meet-ups and other events we might be planning near you.",
+            href: "#",
+          },
+          {
+            id: 10,
+            title: "Security",
+            description: "Understand how we take your privacy seriously.",
+            href: "#",
+          },
+        ],
+      },
+    ],
+  },
+};
+
 export const links = {
   data: {
     direction: "row",

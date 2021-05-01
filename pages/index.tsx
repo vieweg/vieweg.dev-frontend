@@ -7,7 +7,7 @@ import Header from "./../components/Header";
 import { LinksBlockProps } from "../components/LinksBlock";
 import { AvatarProps } from "../components/Avatar";
 import Modal from "../components/Modal";
-import Menu from "../components/Menu";
+import Menu, { MenuProps } from "../components/Menu";
 import { FaGithub } from "react-icons/fa";
 
 interface indexProps {
@@ -17,6 +17,7 @@ interface indexProps {
     html: string;
   };
   links: LinksBlockProps;
+  menu: MenuProps;
 }
 
 const Home: React.FC = () => {
@@ -41,7 +42,7 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div>
-        <Menu />
+        {data?.menu.title && data.menu.urlLogo && <Menu {...data?.menu} />}
         <Header
           avatar={avatar}
           html={data?.user.html}
