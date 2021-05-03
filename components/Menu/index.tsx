@@ -74,7 +74,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         return (
           <li key={item.id} className="relative py-2">
             <button
-              name={item.title}
+              aria-label={item.title}
               onClick={() => togleDropdown(item.id)}
               onBlur={() => togleDropdown(item.id)}
               className={`flex flex-row items-baseline group text-base font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
@@ -226,18 +226,18 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         </div>
         <div className="md:hidden">
           <button
-            name="Open menu"
+            aria-label="Menu"
             onClick={() => setShowmobile((s) => !s)}
-            className={`flex flex-row items-baseline group ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover} focus:outline-none`}
+            className={`flex flex-row p-1 items-baseline group ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover} focus:outline-none`}
           >
             {showMobile ? (
               <FaTimes
-                className={`${colors[colorMode].colorText} ml-1 h-6 w-6 group-hover:${colors[colorMode].colorTextHover}`}
+                className={`${colors[colorMode].colorText} h-9 w-9 group-hover:${colors[colorMode].colorTextHover}`}
                 aria-hidden="true"
               />
             ) : (
               <FaBars
-                className={`${colors[colorMode].colorText} ml-1 h-6 w-6 group-hover:${colors[colorMode].colorTextHover}`}
+                className={`${colors[colorMode].colorText} h-9 w-9 group-hover:${colors[colorMode].colorTextHover}`}
                 aria-hidden="true"
               />
             )}

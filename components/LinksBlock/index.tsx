@@ -37,7 +37,7 @@ const defaults = {
     size: 40,
     color: "rgba(220,38,38, 1)",
     classCssTitle: "ml-2 align-bottom",
-    classCssLink: "text-red-400",
+    classCssLink: "p-3 text-red-400",
     classCssIcon: "",
   },
 };
@@ -71,7 +71,7 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
     if (props.direction && props.direction === "column") {
       return "flex flex-col space-y-4 justify-start";
     }
-    return "flex flex-row space-x-4 justify-center items-end";
+    return "flex flex-row justify-center items-end";
   }, [props.direction]);
 
   if (!linksProps.links || linksProps.links.length <= 0) {
@@ -79,7 +79,7 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
   }
 
   return (
-    <div className="my-8 ">
+    <div className="my-4">
       {linksProps.blockTitle && (
         <div
           className={

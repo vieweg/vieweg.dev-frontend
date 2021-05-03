@@ -38,7 +38,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Welcome!</title>
+        <title>I&apos;m Rafael Vieweg</title>
         <link rel="icon" href="/favicon.png" />
         <meta name="description" content={data?.user.excerpt} />
       </Head>
