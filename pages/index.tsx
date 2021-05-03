@@ -40,9 +40,10 @@ const Home: React.FC = () => {
       <Head>
         <title>Welcome!</title>
         <link rel="icon" href="/favicon.png" />
+        <meta name="description" content={data?.user.excerpt} />
       </Head>
       <div>
-        {data?.menu.title && data.menu.urlLogo && <Menu {...data?.menu} />}
+        <Menu {...data?.menu} />
         <Header
           avatar={avatar}
           html={data?.user.html}
@@ -73,6 +74,7 @@ const Home: React.FC = () => {
                 href="https://github.com/vieweg/vieweg.dev"
                 target="_blank"
                 rel="noreferrer noopener"
+                title="Github code repo"
               >
                 <FaGithub />
               </a>

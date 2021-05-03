@@ -79,7 +79,7 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
   }
 
   return (
-    <div className="my-6 ">
+    <div className="my-8 ">
       {linksProps.blockTitle && (
         <div
           className={
