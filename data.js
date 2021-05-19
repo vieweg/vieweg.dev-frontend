@@ -114,85 +114,27 @@ export const menu = {
       ],
     },
   ],
-  _rightItems: [
-    {
-      id: 0,
-      title: "Solutions",
-      svgIcon:
-            '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-      items: [
-        {
-          id: 1,
-          title: "Analytics",
-          description:
-            "Get a better understanding of where your traffic is coming from.",
-          href: "/admin",
-          svgIcon:
-            '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-        },
-        {
-          id: 2,
-          title: "Engagement",
-          description:
-            "Speak directly to your customers in a more meaningful way.",
-          href: "https://www.google.com",
-        },
-        {
-          id: 3,
-          title: "Security",
-          description: "Your customers' data will be safe and secure.",
-          href: "#",
-        },
-      ],
-    },
+  rightItems: [
     {
       id: 4,
-      title: "Pricing",
+      title: "Buy me a Coffee",
       href: "#",
-    },
-    {
-      id: 5,
-      title: "Docs",
-      href: "#",
-    },
-    {
-      id: 6,
-      title: "More",
-      items: [
-        {
-          id: 7,
-          title: "Help Center",
-          description:
-            "Get all of your questions answered in our forums or contact support.",
-          href: "#",
-        },
-        {
-          id: 8,
-          title: "Guides",
-          description:
-            "Learn how to maximize our platform to get the most out of it.",
-          href: "#",
-        },
-        {
-          id: 9,
-          title: "Events",
-          description:
-            "See what meet-ups and other events we might be planning near you.",
-          href: "#",
-        },
-        {
-          id: 10,
-          title: "Security",
-          description: "Understand how we take your privacy seriously.",
-          href: "#",
-        },
-      ],
     },
   ],
   centerItems: [
     {
+      id: 4,
+      title: "Home",
+      href: "/",
+    },
+    {
+      id: 5,
+      title: "Articles",
+      href: "#",
+    },
+    {
       id: 0,
-      title: "Solutions",
+      title: "tutorials",
       svgIcon:
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
       items: [
@@ -221,47 +163,9 @@ export const menu = {
       ],
     },
     {
-      id: 4,
-      title: "Pricing",
-      href: "#",
-    },
-    {
       id: 5,
-      title: "Docs",
+      title: "Talk to Me",
       href: "#",
-    },
-    {
-      id: 6,
-      title: "More",
-      items: [
-        {
-          id: 7,
-          title: "Help Center",
-          description:
-            "Get all of your questions answered in our forums or contact support.",
-          href: "#",
-        },
-        {
-          id: 8,
-          title: "Guides",
-          description:
-            "Learn how to maximize our platform to get the most out of it.",
-          href: "#",
-        },
-        {
-          id: 9,
-          title: "Events",
-          description:
-            "See what meet-ups and other events we might be planning near you.",
-          href: "#",
-        },
-        {
-          id: 10,
-          title: "Security",
-          description: "Understand how we take your privacy seriously.",
-          href: "#",
-        },
-      ],
     },
   ],
 },
@@ -315,4 +219,77 @@ export const links = {
       },
     ],
   }
+}
+
+export const articles = {
+  data:
+    [
+      {
+        id: 1,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
+        isNew: true,
+      },
+      {
+        id: 2,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
+        categories:[
+          { id: 1, title: "cat1", href: "/" },
+          { id: 2, title: "cat2", href: "/" },
+        ]
+      },
+      {
+        id: 3,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/0959dc176ad6aa1531b9-FrontMOose.png",
+        isNew: true,
+      },
+      {
+        id: 4,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/3112eb4c4bdb87b303e9-FrontAcin.png",
+        isNew: true,
+      },
+      {
+        id: 5,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/7c09bdb878af931e6bbe-EsquadriasMGraf.png",
+        isNew: true,
+      },
+      {
+        id: 6,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/b2321c2982e499e664de-frontCOmercial.png",
+        isNew: true,
+      },
+      {
+        id: 7,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/3210a22b37b50d0cbbc7-vivaleve.png",
+        isNew: true,
+      },
+      {
+        id: 8,
+        title: "Salvando alterações locais com o DevTools do browser",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        href:"/",
+        thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
+        isNew: true,
+      }
+    ]
 }

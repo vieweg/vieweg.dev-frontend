@@ -37,7 +37,7 @@ const defaults = {
     size: 40,
     color: "rgba(220,38,38, 1)",
     classCssTitle: "ml-2 align-bottom",
-    classCssLink: "p-3 text-red-400",
+    classCssLink: "p-2 text-red-400",
     classCssIcon: "",
   },
 };

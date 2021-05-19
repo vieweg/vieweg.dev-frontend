@@ -8,7 +8,8 @@ import { LinksBlockProps } from "../components/LinksBlock";
 import { AvatarProps } from "../components/Avatar";
 import Modal from "../components/Modal";
 import Menu, { MenuProps } from "../components/Menu";
-import { FaGithub } from "react-icons/fa";
+import Footer from "../components/Footer";
+import Article, { ArticleProps } from "../components/Article";
 
 interface indexProps {
   user: {
@@ -18,6 +19,7 @@ interface indexProps {
   };
   links: LinksBlockProps;
   menu: MenuProps;
+  articles: ArticleProps[];
 }
 
 const Home: React.FC = () => {
@@ -51,36 +53,29 @@ const Home: React.FC = () => {
           links={data?.links}
         />
 
-        <main className="flex flex-row flex-1 justify-between my-28 text-center">
-          <div className="w-full sm:w-1/4 h-48 border border-solid border-gray-200 m-1.5 rounded">
-            box
+        <main className="flex flex-row flex-1 justify-start flex-wrap pb-16">
+          <div className="w-full text-center my-12 font-extrabold text-3xl text-gray-800">
+            Latest Articles
           </div>
-          <div className="w-5/6 sm:w-1/4 h-48 border border-solid border-gray-200 m-1.5 rounded">
-            box
-          </div>
-          <div className="w-5/6 sm:w-1/4  border border-solid border-gray-200 m-1.5 rounded">
-            box
-          </div>
-          <div className="w-5/6 sm:w-1/4  border border-solid border-gray-200 m-1.5 rounded">
-            box
-          </div>
+          {data &&
+            data.articles.length > 0 &&
+            data.articles.map((article) => {
+              return (
+                <Article
+                  key={article.id}
+                  id={article.id}
+                  href={article.href}
+                  thumb={article.thumb}
+                  title={article.title}
+                  description={article.description}
+                  categories={article.categories}
+                  isNew={article.isNew}
+                />
+              );
+            })}
         </main>
 
-        <footer className="w-full">
-          <div className="text-center">
-            <div className="flex flex-row w-auto m-auto justify-center items-center whitespace-pre-wrap">
-              Get this code on{" "}
-              <a
-                href="https://github.com/vieweg/vieweg.dev"
-                target="_blank"
-                rel="noreferrer noopener"
-                title="Github code repo"
-              >
-                <FaGithub />
-              </a>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
       <Modal showModal={showModal} onClose={handleModal} />
     </>

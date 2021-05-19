@@ -7,6 +7,9 @@ module.exports = {
         spinSlow: 'spin 3s linear infinite',
       }
     },
+    rotate: {
+      30: '30deg',
+    }
   },
   variants: {
     extend: {},
