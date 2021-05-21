@@ -1,75 +1,71 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
-import useSWR from "swr";
 
-import { fetcher } from "../services/api";
+import { api } from "../services/api";
 import Header from "./../components/Header";
-import { LinksBlockProps } from "../components/LinksBlock";
-import { AvatarProps } from "../components/Avatar";
-import Modal from "../components/Modal";
 import Menu, { MenuProps } from "../components/Menu";
+import { AvatarProps } from "../components/Avatar";
+import { LinksBlockProps } from "../components/LinksBlock";
+import Modal from "../components/Modal";
 import Footer from "../components/Footer";
-import Article, { ArticleProps } from "../components/Article";
+import Article from "../components/Article";
+import PostType from "../types/post";
+import UserType from "../types/user";
 
 interface indexProps {
-  user: {
-    avatar: AvatarProps;
-    excerpt: string;
-    html: string;
-  };
+  user: UserType;
   links: LinksBlockProps;
   menu: MenuProps;
-  articles: ArticleProps[];
+  posts: PostType[];
 }
 
-const Home: React.FC = () => {
+const Home: React.FC<indexProps> = ({ posts, user, links, menu }) => {
   const [avatar, setAvatar] = useState<AvatarProps | false>(false);
   const [showModal, setShowModal] = useState(false);
-  const { data } = useSWR<indexProps>("/api/user", fetcher);
 
   const handleModal = useCallback(() => {
     setShowModal((s) => !s);
   }, []);
 
   useEffect(() => {
-    if (data?.user && data.user.avatar) {
-      setAvatar({ onCLick: handleModal, ...data.user.avatar });
+    if (user && user.avatar) {
+      setAvatar({ onCLick: handleModal, ...user.avatar });
     }
-  }, [data, handleModal]);
+  }, [user, handleModal]);
 
   return (
     <>
       <Head>
         <title>I&apos;m Rafael Vieweg</title>
         <link rel="icon" href="/favicon.png" />
-        <meta name="description" content={data?.user.excerpt} />
+        <meta name="description" content={user.excerpt} />
       </Head>
       <div>
-        <Menu {...data?.menu} />
+        <Menu {...menu} />
         <Header
           avatar={avatar}
-          html={data?.user.html}
-          excerpt={data?.user.excerpt}
-          links={data?.links}
+          html={user.html}
+          excerpt={user.excerpt}
+          links={links}
         />
 
         <main className="flex flex-row flex-1 justify-start flex-wrap pb-16">
           <div className="w-full text-center my-12 font-extrabold text-3xl text-gray-800">
             Latest Articles
           </div>
-          {data &&
-            data.articles.length > 0 &&
-            data.articles.map((article) => {
+          {posts &&
+            posts.length > 0 &&
+            posts.map((post) => {
               return (
                 <Article
-                  key={article.id}
-                  id={article.id}
-                  href={article.href}
-                  thumb={article.thumb}
-                  title={article.title}
-                  description={article.description}
-                  categories={article.categories}
-                  isNew={article.isNew}
+                  key={post.id}
+                  id={post.id}
+                  href={`/posts/${post.slug}`}
+                  thumb={post.thumb}
+                  title={post.title}
+                  description={post.description}
+                  categories={post.categories}
+                  isNew={post.isNew}
                 />
               );
             })}
@@ -81,5 +77,25 @@ const Home: React.FC = () => {
     </>
   );
 };
+
+type PropsType = {
+  props: indexProps;
+};
+
+export async function getStaticProps(): Promise<PropsType> {
+  const { posts } = (await api.get<Pick<indexProps, "posts">>("/posts")).data;
+  const { user, links, menu } = (
+    await api.get<Omit<indexProps, "posts">>("/user")
+  ).data;
+
+  return {
+    props: {
+      posts,
+      user,
+      links,
+      menu,
+    },
+  };
+}
 
 export default Home;

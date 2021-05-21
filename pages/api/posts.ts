@@ -1,14 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { links, menu, user } from "../../data";
+import { articles } from "../../data";
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   switch (req.method) {
     case "GET": {
       const data = {
-        user: user.data,
-        links: links.data,
-        menu: menu.data,
+        posts: articles.data,
       };
 
       res.status(200).json(data);

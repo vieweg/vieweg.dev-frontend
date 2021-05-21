@@ -11,11 +11,11 @@ export const user = {
     }
   }
 }
-
+const urlBase = process.env.NODE_ENV === "development" ? process.env.URL_LOCAL_APLICATION : process.env.URL_APLICATION
 export const menu = {
   data: {
     logo : {
-      url: "rv-logo.svg",
+      url: `${urlBase}/rv-logo.svg`,
       alt: "Rafael Vieweg",
       width:32,
       height:32,
@@ -216,17 +216,18 @@ export const articles = {
     [
       {
         id: 1,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
-        thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
         isNew: true,
+        slug:"post-1",
+        title: "Salvando alterações locais com o DevTools do browser",
+        thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
+        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.\n\nVenenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.\n\n## Lorem Ipsum\n\nTristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.",
       },
       {
         id: 2,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-2",
         thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
         categories:[
           { id: 1, title: "cat1", href: "/" },
@@ -237,15 +238,15 @@ export const articles = {
         id: 3,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-3",
         thumb:"https://por-navegantes.s3.amazonaws.com/0959dc176ad6aa1531b9-FrontMOose.png",
         isNew: true,
       },
       {
         id: 4,
+        slug:"post-4",
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
         thumb:"https://por-navegantes.s3.amazonaws.com/3112eb4c4bdb87b303e9-FrontAcin.png",
         isNew: true,
       },
@@ -253,7 +254,7 @@ export const articles = {
         id: 5,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-5",
         thumb:"https://por-navegantes.s3.amazonaws.com/7c09bdb878af931e6bbe-EsquadriasMGraf.png",
         isNew: true,
       },
@@ -261,7 +262,7 @@ export const articles = {
         id: 6,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-6",
         thumb:"https://por-navegantes.s3.amazonaws.com/b2321c2982e499e664de-frontCOmercial.png",
         isNew: true,
       },
@@ -269,7 +270,7 @@ export const articles = {
         id: 7,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-7",
         thumb:"https://por-navegantes.s3.amazonaws.com/3210a22b37b50d0cbbc7-vivaleve.png",
         isNew: true,
       },
@@ -277,7 +278,7 @@ export const articles = {
         id: 8,
         title: "Salvando alterações locais com o DevTools do browser",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        href:"/",
+        slug:"post-8",
         thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
         isNew: true,
       }
