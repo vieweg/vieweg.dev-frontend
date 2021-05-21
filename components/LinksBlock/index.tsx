@@ -1,12 +1,4 @@
-import React, {
-  ComponentType,
-  isValidElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { IconBaseProps } from "react-icons";
-import * as fa from "react-icons/fa";
+import React, { useCallback } from "react";
 
 export interface LinksBlockProps {
   blockTitle?: string;
@@ -19,9 +11,7 @@ export interface LinksBlockProps {
       url: string;
       title: string;
       target?: "_blank" | "_self";
-      icon?: ComponentType<IconBaseProps>;
-      color?: string;
-      size?: number;
+      svgIcon?: string;
       classCssTitle?: string;
       classCssLink?: string;
       classCssIcon?: string;
@@ -33,40 +23,15 @@ const defaults = {
   cssClassTitle: "text-center text-xl font-bold mb-2",
   links: {
     target: "_self",
-    icon: fa["FaLink"],
-    size: 40,
-    color: "rgba(220,38,38, 1)",
+    svgIcon:
+      '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" /></svg>',
     classCssTitle: "ml-2 align-bottom",
     classCssLink: "p-2 text-red-400",
-    classCssIcon: "",
+    classCssIcon: "text-gray-500 w-6 h-6",
   },
 };
 
 const LinksBlock: React.FC<LinksBlockProps> = (props) => {
-  const [linksProps, setLinksProps] = useState<LinksBlockProps>(
-    {} as LinksBlockProps
-  );
-
-  useEffect(() => {
-    async function handleIcons(): Promise<void> {
-      if (props.links && props.links.length > 0) {
-        const linksFormatted = { ...props };
-        for await (const ln of linksFormatted.links) {
-          if (
-            ln.icon &&
-            !isValidElement(ln.icon) &&
-            typeof ln.icon === "string"
-          ) {
-            // eslint-disable-next-line
-            ln.icon = fa[ln.icon];
-          }
-        }
-        setLinksProps({ ...linksFormatted });
-      }
-    }
-    handleIcons();
-  }, [props]);
-
   const cssClassBlock = useCallback(() => {
     if (props.direction && props.direction === "column") {
       return "flex flex-col space-y-4 justify-start";
@@ -74,32 +39,28 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
     return "flex flex-row justify-center items-end";
   }, [props.direction]);
 
-  if (!linksProps.links || linksProps.links.length <= 0) {
+  if (!props.links || props.links.length <= 0) {
     return null;
   }
 
   return (
     <div className="my-4">
-      {linksProps.blockTitle && (
+      {props.blockTitle && (
         <div
           className={
-            linksProps.cssClassTitle
-              ? linksProps.cssClassTitle
-              : defaults.cssClassTitle
+            props.cssClassTitle ? props.cssClassTitle : defaults.cssClassTitle
           }
         >
-          {linksProps.blockTitle}
+          {props.blockTitle}
         </div>
       )}
       <div className={cssClassBlock()}>
-        {linksProps.links.map(
+        {props.links.map(
           ({
             id,
             title,
             url,
-            icon: Icon = defaults.links.icon,
-            size = defaults.links.size,
-            color = defaults.links.color,
+            svgIcon = defaults.links.svgIcon,
             target = defaults.links.target,
             classCssLink = defaults.links.classCssLink,
             classCssIcon = defaults.links.classCssIcon,
@@ -114,8 +75,10 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
               className={classCssLink}
             >
               <div className="flex flex-row items-end">
-                {Icon && (
-                  <Icon size={size} className={classCssIcon} color={color} />
+                {svgIcon && (
+                  <div className={classCssIcon}>
+                    <i dangerouslySetInnerHTML={{ __html: svgIcon }} />
+                  </div>
                 )}
                 {props.showTitles && (
                   <span className={classCssTitle}>{title}</span>

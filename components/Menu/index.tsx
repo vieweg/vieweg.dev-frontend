@@ -77,17 +77,24 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
               aria-label={item.title}
               onClick={() => togleDropdown(item.id)}
               onBlur={() => togleDropdown(item.id)}
-              className={`flex flex-row items-baseline group text-base font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+              className={`flex flex-row items-center group text-base font-medium ${colors[colorMode].colorText}`}
             >
-              {item.title}{" "}
-              <FaCaretDown
-                className={`${colors[colorMode].colorText} ml-1 h-4 w-4 group-hover:${colors[colorMode].colorTextHover}`}
-                aria-hidden="true"
-              />
+              <div className="flex flex-row items-center group-hover:opacity-80">
+                {item.svgIcon && (
+                  <div className="w-6 h-6 mr-2">
+                    <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
+                  </div>
+                )}
+                {item.title}
+                <FaCaretDown
+                  className={`${colors[colorMode].colorText} ml-1 h-4 w-4 group-hover:opacity-80`}
+                  aria-hidden="true"
+                />
+              </div>
             </button>
             <div
               id={item.id}
-              className={`absolute ${colors[colorMode].bgMenu} w-96 p-8 pt-2 ml-2 rounded-md shadow-sm hidden`}
+              className={`absolute ${colors[colorMode].bgMenu} w-96 p-8 pt-2 ml-2 rounded-md shadow-sm hidden z-10`}
             >
               <ul>{item.items.map((child) => renderItem({ ...child }))}</ul>
             </div>
@@ -100,10 +107,22 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
           return (
             <li
               key={item.id}
-              className={`text-base py-2 font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+              className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
             >
               <a key={item.id} href={item.href} title={item.title}>
-                {item.title}
+                <div className="flex flex-row items-center  group-hover:opacity-80">
+                  {item.svgIcon && (
+                    <div className="w-6 h-6 mr-2">
+                      <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
+                    </div>
+                  )}
+                  {item.title}
+                </div>
+                <div className="ml-8 mt-1">
+                  <small className="text-gray-200 group-hover:opacity-80">
+                    {item.description}
+                  </small>
+                </div>
               </a>
             </li>
           );
@@ -111,10 +130,24 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         return (
           <li
             key={item.id}
-            className={`text-base py-2 font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+            className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
           >
             <Link href={item.href}>
-              <a title={item.title}>{item.title}</a>
+              <a title={item.title}>
+                <div className="flex flex-row items-center group-hover:opacity-80">
+                  {item.svgIcon && (
+                    <div className="w-6 h-6 mr-2">
+                      <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
+                    </div>
+                  )}
+                  {item.title}
+                </div>
+                <div className="ml-8 mt-1">
+                  <small className="text-gray-200 group-hover:opacity-80">
+                    {item.description}
+                  </small>
+                </div>
+              </a>
             </Link>
           </li>
         );
