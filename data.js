@@ -162,7 +162,7 @@ export const menu = {
   rightItems: [
     {
       id: 4,
-      title: "Download my CV",
+      title: "Download CV",
       href: "#",
     },
   ],
