@@ -7,5 +7,5 @@ type PostAndMorePosts = {
 export async function getPostAndMorePosts({
   slug,
 }: PostAndMorePosts): Promise<void> {
-  const post = await api.get(`/posts/${slug}`);
+  //const post = await api.get(`/posts/${slug}`);
 }
