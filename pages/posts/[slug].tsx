@@ -8,6 +8,7 @@ import Head from "next/head";
 import Menu, { MenuProps } from "../../components/Menu";
 import UserType from "../../types/user";
 import Image from "next/image";
+import { GetStaticPaths } from "next";
 
 type PostProps = {
   post: PostType;
@@ -65,30 +66,32 @@ type PropsType = {
   props: PostProps;
 };
 
-type PathsType = {
+/* type PathsType = {
   paths: ParamsType[];
   fallback: boolean;
-};
+}; */
 
 export async function getStaticProps({
   params,
 }: ParamsType): Promise<PropsType> {
   const post = await api.get(`/post/${params.slug}`);
-  const { user, menu } = (
-    await api.get<{ user: UserType; menu: MenuProps }>("/user")
-  ).data;
+  const { data: userData } = await api.get<{ user: UserType; menu: MenuProps }>(
+    "/user"
+  );
 
-  return { props: { post: post.data, user, menu } };
+  return {
+    props: { post: post.data, user: userData.user, menu: userData.menu },
+  };
 }
 
-export async function getStaticPaths(): Promise<PathsType> {
-  const { posts } = (await api.get<{ posts: PostType[] }>("/posts")).data;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data: postsData } = await api.get<{ posts: PostType[] }>("/posts");
 
-  const paths = posts.map((post) => ({
+  const paths = postsData.posts.map((post) => ({
     params: { slug: post.slug },
   }));
 
-  return { paths, fallback: false };
-}
+  return { paths: paths || [], fallback: true };
+};
 
 export default Post;

@@ -83,17 +83,17 @@ type PropsType = {
 };
 
 export async function getStaticProps(): Promise<PropsType> {
-  const { posts } = (await api.get<Pick<indexProps, "posts">>("/posts")).data;
-  const { user, links, menu } = (
-    await api.get<Omit<indexProps, "posts">>("/user")
-  ).data;
+  const { data: postsData } = await api.get<Pick<indexProps, "posts">>(
+    "/posts"
+  );
+  const { data: userData } = await api.get<Omit<indexProps, "posts">>("/user");
 
   return {
     props: {
-      posts,
-      user,
-      links,
-      menu,
+      posts: postsData.posts || [],
+      user: userData.user,
+      links: userData.links,
+      menu: userData.menu,
     },
   };
 }
