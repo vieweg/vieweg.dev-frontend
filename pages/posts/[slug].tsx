@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-// import ErrorPage from "next/error";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { api } from "../../services/api";
@@ -9,6 +8,16 @@ import PostType from "../../types/post";
 import Footer from "../../components/Footer";
 import Menu, { MenuProps } from "../../components/Menu";
 import UserType from "../../types/user";
+
+//import PostBody from "../../components/PostBody";
+
+import Markdown from "markdown-to-jsx";
+import "highlight.js/styles/dracula.css";
+
+import hljs from "highlight.js/lib/core";
+import language from "highlight.js/lib/languages/javascript";
+
+hljs.registerLanguage("javascript", language);
 
 type PostProps = {
   post: PostType;
@@ -20,8 +29,12 @@ type PostProps = {
 const Post: React.FC<PostProps> = ({ post, user, menu }) => {
   const router = useRouter();
 
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
+
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div className="mx-auto">Loading...</div>;
   }
 
   return (
@@ -35,9 +48,9 @@ const Post: React.FC<PostProps> = ({ post, user, menu }) => {
         <Menu {...menu} />
 
         <main className="flex flex-row flex-1 justify-start flex-wrap pb-16">
-          <div className="w-full text-center my-12 font-extrabold text-3xl text-gray-800">
+          <div className="w-full  my-12 font-extrabold text-3xl text-gray-800">
             {post.thumb && (
-              <div className="relative w-5/6 h-96 mx-auto">
+              <div className="hidden sm:block relative w-5/6 h-96 mx-auto">
                 <Image
                   layout="fill"
                   objectFit="cover"
@@ -46,7 +59,12 @@ const Post: React.FC<PostProps> = ({ post, user, menu }) => {
                 />
               </div>
             )}
-            {post.title}
+            <div className="my-12">
+              <h1 className="text-3xl my-12 text-center">{post.title}</h1>
+              <article className="prose prose-lg prose-indigo max-w-3xl m-auto font-normal text-lg">
+                <Markdown>{post.content || ""}</Markdown>
+              </article>
+            </div>
           </div>
         </main>
 

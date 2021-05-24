@@ -1,3 +1,13 @@
+import fs from 'fs'
+import { join } from 'path'
+
+
+const postsDirectory = join(process.cwd(), '_posts')
+const fullPath = join(postsDirectory, 'teste.md')
+const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+const urlBase = process.env.NODE_ENV === "development" ? process.env.URL_LOCAL_APLICATION : process.env.URL_APLICATION
+
 export const user = {
   data: {
     html: "<h1>Hello!</h1><h2>I'm Rafael Vieweg</h2><p>I'm a Brazilian software developer and am currently based in London. With more than 12 years of experience in developing systems and web applications.</p>",
@@ -11,7 +21,6 @@ export const user = {
     }
   }
 }
-const urlBase = process.env.NODE_ENV === "development" ? process.env.URL_LOCAL_APLICATION : process.env.URL_APLICATION
 export const menu = {
   data: {
     logo : {
@@ -221,7 +230,7 @@ export const articles = {
         title: "Salvando alterações locais com o DevTools do browser",
         thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
         description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.\n\nVenenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.\n\n## Lorem Ipsum\n\nTristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.",
+        content: fileContents,
       },
       {
         id: 2,
