@@ -1,11 +1,3 @@
-import fs from 'fs'
-import { join } from 'path'
-
-
-const postsDirectory = join(process.cwd(), '_posts')
-const fullPath = join(postsDirectory, 'teste.md')
-const fileContents = fs.readFileSync(fullPath, 'utf8');
-
 const urlBase = process.env.NODE_ENV === "development" ? process.env.URL_LOCAL_APLICATION : process.env.URL_APLICATION
 
 export const user = {
@@ -13,7 +5,7 @@ export const user = {
     html: "<h1>Hello!</h1><h2>I'm Rafael Vieweg</h2><p>I'm a Brazilian software developer and am currently based in London. With more than 12 years of experience in developing systems and web applications.</p>",
     excerpt: "<h1>Hello!</h1><h2>I'm Rafael Vieweg</h2><p>I'm a Brazilian software developer and am currently based in London. With more than 12 years of experience in developing systems and web applications.</p><p> I'm a full stack developer, working mainly with PHP, using the Symfony Framework, Wordpress and the entire ecosystem involved (HTML, CSS, MYSQL, JS ...), I am an attentive professional and following market trends, recently I have been improving myself in Javascript and Typescript, more specifically on the React.js and Node.js stack.</p> <address><b>Get in touch</b><br /><a href='#'>vieweg@gmail.com</a><br>07447 485834 <small>(better by text message or whatsapp)</small></address><p><b>You can find some of my latest projects below</b></p>",
     avatar: {
-      url:"https://i.pinimg.com/originals/11/5f/4f/115f4f233582670e085966ee8250e75f.png",
+      url:"https://avatars.githubusercontent.com/u/29706907?v=4",
       alt: "Rafael Vieweg - Software Developer",
       newStories: true,
       tag: false,
@@ -132,7 +124,7 @@ export const menu = {
     {
       id: 5,
       title: "Articles",
-      href: "#",
+      href: "/posts/post-1",
     },
     {
       id: 0,
@@ -143,36 +135,24 @@ export const menu = {
           title: "A Simple Checkout",
           description:
             "Get a better understanding of where your traffic is coming from.",
-          href: "/admin",
+          href: "/posts/post-1",
           svgIcon:
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-        },
-        {
-          id: 2,
-          title: "Engagement",
-          description:
-            "Speak directly to your customers in a more meaningful way.",
-          href: "https://www.google.com",
-        },
-        {
-          id: 3,
-          title: "Security",
-          description: "Your customers' data will be safe and secure.",
-          href: "#",
         },
       ],
     },
     {
       id: 6,
-      title: "Talk to Me",
-      href: "#",
+      title: "About Me",
+      href: "/posts/post-1",
     },
   ],
   rightItems: [
     {
       id: 4,
       title: "Download CV",
-      href: "#",
+      href: "https://vieweg.dev/ResumeRV.pdf",
+      target: "_blank"
     },
   ],
 },
@@ -222,74 +202,61 @@ export const links = {
 
 export const articles = {
   data:
-    [
-      {
-        id: 1,
-        isNew: true,
-        slug:"post-1",
-        title: "Salvando alterações locais com o DevTools do browser",
-        thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        content: fileContents,
-      },
-      {
-        id: 2,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-2",
-        thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
-        categories:[
-          { id: 1, title: "cat1", href: "/" },
-          { id: 2, title: "cat2", href: "/" },
-        ]
-      },
-      {
-        id: 3,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-3",
-        thumb:"https://por-navegantes.s3.amazonaws.com/0959dc176ad6aa1531b9-FrontMOose.png",
-        isNew: true,
-      },
-      {
-        id: 4,
-        slug:"post-4",
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        thumb:"https://por-navegantes.s3.amazonaws.com/3112eb4c4bdb87b303e9-FrontAcin.png",
-        isNew: true,
-      },
-      {
-        id: 5,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-5",
-        thumb:"https://por-navegantes.s3.amazonaws.com/7c09bdb878af931e6bbe-EsquadriasMGraf.png",
-        isNew: true,
-      },
-      {
-        id: 6,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-6",
-        thumb:"https://por-navegantes.s3.amazonaws.com/b2321c2982e499e664de-frontCOmercial.png",
-        isNew: true,
-      },
-      {
-        id: 7,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-7",
-        thumb:"https://por-navegantes.s3.amazonaws.com/3210a22b37b50d0cbbc7-vivaleve.png",
-        isNew: true,
-      },
-      {
-        id: 8,
-        title: "Salvando alterações locais com o DevTools do browser",
-        description:"Projeto open source para visualizar repositórios do Github em 1s como se estivesse no Visual Studio Code",
-        slug:"post-8",
-        thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
-        isNew: true,
-      }
-    ]
+  [
+    {
+      id: 1,
+      isNew: true,
+      slug:"post-1",
+      title: "Real State - Karla Imoveis",
+      thumb:"https://por-navegantes.s3.amazonaws.com/0a012121ce003c580d46-frontkarlaimoveis.png",
+      description:"Karla Imóveis\n\nProject for real estate Karla Imóveis.\nMeeting the needs of the client, a new website was developed to display its catalog of properties for sale and lease, providing visitors with options for advanced filters, map display, registration and full responsive.\n\n",
+      content: "",
+    },
+    {
+      id: 2,
+      title: "Business - Comercial Presidente",
+      thumb:"https://por-navegantes.s3.amazonaws.com/b2321c2982e499e664de-frontCOmercial.png",
+      description:"Website developed for a distributor of supplies and tools, located in the city of Navegantes / SC - Brazil.\n\nDeveloped in PHP + MySQL, using the Symfony 5+ framework\n\n",
+      slug:"post-2",
+    },
+    {
+      id: 3,
+      title: "News - Vale SC News",
+      description:"Website developed for news portal",
+      slug:"post-3",
+      thumb:"https://por-navegantes.s3.amazonaws.com/07d53e0e303f72c58759-frontVale.png",
+    },
+    {
+      id: 4,
+      slug:"post-4",
+      title: "E-commerce - Moose Baby",
+      description:"Website developed in prestashop for sales of children's decorative products",
+      thumb:"https://por-navegantes.s3.amazonaws.com/0959dc176ad6aa1531b9-FrontMOose.png",
+
+    },
+    {
+      id: 5,
+      title: "Business - Esquadrias MGraf",
+      description:"Website developed with Wordpress for a local business",
+      slug:"post-5",
+      thumb:"https://por-navegantes.s3.amazonaws.com/7c09bdb878af931e6bbe-EsquadriasMGraf.png",
+
+    },
+    {
+      id: 6,
+      title: "Association - ACIN",
+      thumb:"https://por-navegantes.s3.amazonaws.com/3112eb4c4bdb87b303e9-FrontAcin.png",
+      description:"Website developed with Wordpress for a local business",
+      slug:"post-6",
+
+    },
+    {
+      id: 7,
+      title: "Business - Viva Leve",
+      description:"Website developed with Wordpress for a local business",
+      slug:"post-7",
+      thumb:"https://por-navegantes.s3.amazonaws.com/3210a22b37b50d0cbbc7-vivaleve.png",
+
+    },
+  ]
 }

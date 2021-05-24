@@ -91,13 +91,13 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
                   aria-hidden="true"
                 />
               </div>
+              <div
+                id={item.id}
+                className={`absolute ${colors[colorMode].bgMenu} w-96 p-8 pt-2 ml-2 rounded-md shadow-sm hidden z-10`}
+              >
+                <ul>{item.items.map((child) => renderItem({ ...child }))}</ul>
+              </div>
             </button>
-            <div
-              id={item.id}
-              className={`absolute ${colors[colorMode].bgMenu} w-96 p-8 pt-2 ml-2 rounded-md shadow-sm hidden z-10`}
-            >
-              <ul>{item.items.map((child) => renderItem({ ...child }))}</ul>
-            </div>
           </li>
         );
       }
@@ -109,7 +109,12 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
               key={item.id}
               className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
             >
-              <a key={item.id} href={item.href} title={item.title}>
+              <a
+                key={item.id}
+                href={item.href}
+                title={item.title}
+                target={item.target}
+              >
                 <div className="flex flex-row items-center  group-hover:opacity-80">
                   {item.svgIcon && (
                     <div className="w-6 h-6 mr-2">
@@ -129,6 +134,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         }
         return (
           <li
+            id="teste"
             key={item.id}
             className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
           >
@@ -186,7 +192,12 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
               key={item.id}
               className={`text-base py-1 font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
             >
-              <a key={item.id} href={item.href} title={item.title}>
+              <a
+                key={item.id}
+                href={item.href}
+                title={item.title}
+                target={item.target}
+              >
                 {item.title}
               </a>
             </li>

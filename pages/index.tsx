@@ -24,7 +24,8 @@ const Home: React.FC<indexProps> = ({ posts, user, links, menu }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = useCallback(() => {
-    setShowModal((s) => !s);
+    // setShowModal((s) => !s);
+    setShowModal(false);
   }, []);
 
   useEffect(() => {

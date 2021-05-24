@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
@@ -9,16 +9,6 @@ import Footer from "../../components/Footer";
 import Menu, { MenuProps } from "../../components/Menu";
 import UserType from "../../types/user";
 
-//import PostBody from "../../components/PostBody";
-
-import Markdown from "markdown-to-jsx";
-import "highlight.js/styles/dracula.css";
-
-import hljs from "highlight.js/lib/core";
-import language from "highlight.js/lib/languages/javascript";
-
-hljs.registerLanguage("javascript", language);
-
 type PostProps = {
   post: PostType;
   user: UserType;
@@ -28,10 +18,6 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ post, user, menu }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    hljs.highlightAll();
-  }, []);
 
   if (router.isFallback) {
     return <div className="mx-auto">Loading...</div>;
@@ -54,15 +40,21 @@ const Post: React.FC<PostProps> = ({ post, user, menu }) => {
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  src={post.thumb}
+                  src="/images/java-oops.webp"
                   alt={post.title}
                 />
               </div>
             )}
             <div className="my-12">
-              <h1 className="text-3xl my-12 text-center">{post.title}</h1>
+              <h1 className="text-3xl my-12 text-center text-blue-900">
+                Oops! Sorry for the inconvenience
+              </h1>
               <article className="prose prose-lg prose-indigo max-w-3xl m-auto font-normal text-lg">
-                <Markdown>{post.content || ""}</Markdown>
+                <p>
+                  I am redoing this part of the website, so this content is not
+                  available at this time. Please come back soon!
+                </p>
+                <p>Feel free to contact me if you think it is necessary.</p>
               </article>
             </div>
           </div>
