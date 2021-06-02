@@ -1,13 +1,17 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Head from "next/head";
-import { GetStaticPaths, GetStaticProps } from "next";
+import ReactMarkdown from "react-markdown";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { api } from "../../services/api";
 import PostType from "../../types/post";
 import Footer from "../../components/Footer";
 import Menu, { MenuProps } from "../../components/Menu";
 import UserType from "../../types/user";
+import CodeBlock from "../../components/CodeBlock";
 
 type PostProps = {
   post: PostType;
@@ -40,21 +44,25 @@ const Post: React.FC<PostProps> = ({ post, user, menu }) => {
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  src="/images/java-oops.webp"
+                  src={post.thumb}
                   alt={post.title}
                 />
               </div>
             )}
             <div className="my-12">
               <h1 className="text-3xl my-12 text-center text-blue-900">
-                Oops! Sorry for the inconvenience
+                {post.title}
               </h1>
-              <article className="prose prose-lg prose-indigo max-w-3xl m-auto font-normal text-lg">
-                <p>
-                  I am redoing this part of the website, so this content is not
-                  available at this time. Please come back soon!
-                </p>
-                <p>Feel free to contact me if you think it is necessary.</p>
+              <article className="prose prose-sm prose-indigo max-w-3xl m-auto font-normal text-lg">
+                <ReactMarkdown
+                  rehypePlugins={[
+                    rehypeSlug,
+                    [rehypeAutolinkHeadings, { behavior: "wrap" }],
+                  ]}
+                  components={{ code: CodeBlock }}
+                >
+                  {post.content || ""}
+                </ReactMarkdown>
               </article>
             </div>
           </div>
