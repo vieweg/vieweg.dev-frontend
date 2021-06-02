@@ -32,7 +32,6 @@ const Home: React.FC<indexProps> = ({ posts, user, links, menu }) => {
       setAvatar({ onCLick: handleModal, ...user.avatar });
     }
   }, [user, handleModal]);
-
   return (
     <>
       <Head>
@@ -83,14 +82,11 @@ type PropsType = {
 };
 
 export async function getStaticProps(): Promise<PropsType> {
-  const { data: postsData } = await api.get<Pick<indexProps, "posts">>(
-    "/posts"
-  );
+  const { data: postsData } = await api.get<PostType[]>("/posts");
   const { data: userData } = await api.get<Omit<indexProps, "posts">>("/user");
-
   return {
     props: {
-      posts: postsData.posts || [],
+      posts: postsData,
       user: userData.user,
       links: userData.links,
       menu: userData.menu,

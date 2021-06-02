@@ -61,7 +61,7 @@ const Post: React.FC<PostProps> = ({ post, user, menu }) => {
             )}
             <div className="my-12">
               <h1 className="text-3xl my-12 text-center">{post.title}</h1>
-              <article className="prose prose-lg prose-indigo max-w-3xl m-auto font-normal text-lg">
+              <article className="prose prose-indigo max-w-3xl m-auto font-normal text-lg">
                 <Markdown>{post.content || ""}</Markdown>
               </article>
             </div>
@@ -91,9 +91,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: postsData } = await api.get<{ posts: PostType[] }>("/posts");
+  const { data: postsData } = await api.get<PostType[]>("/posts");
 
-  const paths = postsData.posts.map((post) => ({
+  const paths = postsData.map((post) => ({
     params: { slug: post.slug },
   }));
 

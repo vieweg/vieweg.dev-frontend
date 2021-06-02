@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { isValidURL } from "../../utils";
 import { FaBars, FaCaretDown, FaTimes } from "react-icons/fa";
+import Link from "next/link";
 
-interface LinkProps {
+import { isValidURL } from "../../utils";
+import Dropdown from "./Dropdown";
+
+export interface LinkProps {
   id: string;
   svgIcon?: string;
   href: string;
   title: string;
   description?: string;
+  colorMode?: "dark" | "default";
   target?: "_blank" | "_self" | "_parent" | "_top" | string;
   nextLink?: boolean;
   element?: HTMLElement;
@@ -32,16 +35,20 @@ export interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ ...props }) => {
   const [showMobile, setShowmobile] = useState(false);
-  const [colorMode, setColorMode] = useState<"default" | "dark">(
-    props.dark ? "dark" : "default"
-  );
+  const [allItems, setAllItems] = useState<LinkProps[]>([]);
 
   useEffect(() => {
-    setColorMode(props.dark ? "dark" : "default");
-  }, [props.dark]);
+    const items: LinkProps[] = [];
+    props.leftItems && items.push(...props.leftItems);
+    props.centerItems && items.push(...props.centerItems);
+    props.rightItems && items.push(...props.rightItems);
+    // Join all items of left, center and right menus in state.
+    setAllItems(items);
+  }, [props.leftItems, props.centerItems, props.rightItems]);
 
   const colors = useMemo(() => {
-    return {
+    const colorMode = props.dark ? "dark" : "default";
+    const defaltColors = {
       dark: {
         bgMenu: "bg-gray-800",
         borderColor: "border-gray-100",
@@ -55,85 +62,24 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         colorTextHover: "text-gray-600",
       },
     };
-  }, []);
+    return defaltColors[colorMode];
+  }, [props.dark]);
 
-  const togleDropdown = useCallback((idElement) => {
-    const element = document.getElementById(idElement);
-    if (!element) return;
-
-    if (!element.style.display || element.style.display == "none") {
-      element.style.display = "block";
-    } else {
-      element.style.display = "none";
-    }
-  }, []);
-
-  const renderItem = useCallback(
-    ({ ...item }: LinkProps) => {
-      if (item.items && item.items.length > 0) {
-        return (
-          <li key={item.id} className="relative py-2">
-            <button
-              aria-label={item.title}
-              onClick={() => togleDropdown(item.id)}
-              onBlur={() => togleDropdown(item.id)}
-              className={`flex flex-row items-center group text-base font-medium ${colors[colorMode].colorText}`}
-            >
-              <div className="flex flex-row items-center group-hover:opacity-80">
-                {item.svgIcon && (
-                  <div className="w-6 h-6 mr-2">
-                    <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
-                  </div>
-                )}
-                {item.title}
-                <FaCaretDown
-                  className={`${colors[colorMode].colorText} ml-1 h-4 w-4 group-hover:opacity-80`}
-                  aria-hidden="true"
-                />
-              </div>
-            </button>
-            <div
-              id={item.id}
-              className={`absolute ${colors[colorMode].bgMenu} w-96 p-8 pt-2 ml-2 rounded-md shadow-sm hidden z-10`}
-            >
-              <ul>{item.items.map((child) => renderItem({ ...child }))}</ul>
-            </div>
-          </li>
-        );
-      }
-
-      if (typeof item.href === "string") {
-        if (isValidURL(item.href)) {
-          return (
-            <li
-              key={item.id}
-              className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
-            >
-              <a key={item.id} href={item.href} title={item.title}>
-                <div className="flex flex-row items-center  group-hover:opacity-80">
-                  {item.svgIcon && (
-                    <div className="w-6 h-6 mr-2">
-                      <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
-                    </div>
-                  )}
-                  {item.title}
-                </div>
-                <div className="ml-8 mt-1">
-                  <small className="text-gray-200 group-hover:opacity-80">
-                    {item.description}
-                  </small>
-                </div>
-              </a>
-            </li>
-          );
-        }
+  const renderLink = useCallback(
+    (item: LinkProps) => {
+      if (typeof item.href === "string" && item.href !== "") {
         return (
           <li
             key={item.id}
-            className={`text-base py-2 font-medium group ${colors[colorMode].colorText}`}
+            className={`text-base py-2 font-medium group ${colors.colorText}`}
           >
-            <Link href={item.href}>
-              <a title={item.title}>
+            {isValidURL(item.href) ? (
+              <a
+                href={item.href}
+                title={item.title}
+                target={item.target}
+                className="block"
+              >
                 <div className="flex flex-row items-center group-hover:opacity-80">
                   {item.svgIcon && (
                     <div className="w-6 h-6 mr-2">
@@ -148,14 +94,51 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
                   </small>
                 </div>
               </a>
-            </Link>
+            ) : (
+              <Link href={item.href}>
+                <a title={item.title} className="block">
+                  <div className="flex flex-row items-center group-hover:opacity-80">
+                    {item.svgIcon && (
+                      <div className="w-6 h-6 mr-2">
+                        <i dangerouslySetInnerHTML={{ __html: item.svgIcon }} />
+                      </div>
+                    )}
+                    {item.title}
+                  </div>
+                  <div className="ml-8 mt-1">
+                    <small className="text-gray-200 group-hover:opacity-80">
+                      {item.description}
+                    </small>
+                  </div>
+                </a>
+              </Link>
+            )}
           </li>
         );
       }
-
       return null;
     },
-    [togleDropdown, colorMode, colors]
+    [colors]
+  );
+
+  const renderItem = useCallback(
+    (item: LinkProps) => {
+      if (item.items && item.items.length > 0) {
+        return (
+          <Dropdown
+            key={item.id}
+            id={item.id}
+            svgIcon={item.svgIcon}
+            title={item.title}
+            colors={colors}
+            items={item.items}
+            renderItem={renderLink}
+          />
+        );
+      }
+      return renderLink(item);
+    },
+    [renderLink, colors]
   );
 
   const renderItemMobile = useCallback(
@@ -164,11 +147,11 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         return (
           <li key={item.id} className="w-full py-4">
             <div
-              className={`flex flex-row items-baseline group text-base font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+              className={`flex flex-row items-baseline group text-base font-medium ${colors.colorText} hover:${colors.colorTextHover}`}
             >
               {item.title}{" "}
               <FaCaretDown
-                className={`${colors[colorMode].colorText}  ml-1 h-4 w-4 group-hover:${colors[colorMode].colorTextHover}`}
+                className={`${colors.colorText}  ml-1 h-4 w-4 group-hover:${colors.colorTextHover}`}
                 aria-hidden="true"
               />
             </div>
@@ -184,7 +167,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
           return (
             <li
               key={item.id}
-              className={`text-base py-1 font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+              className={`text-base py-1 font-medium ${colors.colorText} hover:${colors.colorTextHover}`}
             >
               <a key={item.id} href={item.href} title={item.title}>
                 {item.title}
@@ -195,7 +178,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         return (
           <li
             key={item.id}
-            className={`text-base py-1 font-medium ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover}`}
+            className={`text-base py-1 font-medium ${colors.colorText} hover:${colors.colorTextHover}`}
           >
             <Link href={item.href}>
               <a title={item.title}>{item.title}</a>
@@ -205,18 +188,13 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
       }
       return null;
     },
-    [colors, colorMode]
+    [colors]
   );
-
-  const allItems: LinkProps[] = [];
-  props.leftItems && allItems.push(...props.leftItems);
-  props.centerItems && allItems.push(...props.centerItems);
-  props.rightItems && allItems.push(...props.rightItems);
 
   return (
     <>
       <div
-        className={`flex flex-row justify-between items-center flex-wrap px-8 py-5 border-b-2 ${colors[colorMode].bgMenu} ${colors[colorMode].borderColor} shadow-md z-10`}
+        className={`flex flex-row justify-between items-center flex-wrap px-8 py-5 border-b-2 ${colors.bgMenu} ${colors.borderColor} shadow-md z-10`}
       >
         <div className="">
           {props.logo && (
@@ -237,21 +215,21 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
         <div className="hidden md:flex flex-grow flex-row">
           {props.leftItems && props.leftItems.length > 0 && (
             <div className="flex-1">
-              <ul className="flex flex-row space-x-6 justify-start">
+              <ul className="flex flex-row space-x-6 justify-start focus:outline-none">
                 {props.leftItems.map((leftItem) => renderItem(leftItem))}
               </ul>
             </div>
           )}
           {props.centerItems && props.centerItems.length > 0 && (
             <div className="flex-1">
-              <ul className="flex flex-row space-x-6 justify-center">
+              <ul className="flex flex-row space-x-6 justify-center focus:outline-none">
                 {props.centerItems.map((centerItem) => renderItem(centerItem))}
               </ul>
             </div>
           )}
           {props.rightItems && props.rightItems.length > 0 && (
             <div className="flex-1">
-              <ul className="flex flex-row space-x-6 justify-end">
+              <ul className="flex flex-row space-x-6 justify-end focus:outline-none">
                 {props.rightItems.map((rightItem) => renderItem(rightItem))}
               </ul>
             </div>
@@ -261,16 +239,16 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
           <button
             aria-label="Menu"
             onClick={() => setShowmobile((s) => !s)}
-            className={`flex flex-row p-1 items-baseline group ${colors[colorMode].colorText} hover:${colors[colorMode].colorTextHover} focus:outline-none`}
+            className={`flex flex-row p-1 items-baseline group ${colors.colorText} hover:${colors.colorTextHover} focus:outline-none`}
           >
             {showMobile ? (
               <FaTimes
-                className={`${colors[colorMode].colorText} h-9 w-9 group-hover:${colors[colorMode].colorTextHover}`}
+                className={`${colors.colorText} h-9 w-9 group-hover:${colors.colorTextHover}`}
                 aria-hidden="true"
               />
             ) : (
               <FaBars
-                className={`${colors[colorMode].colorText} h-9 w-9 group-hover:${colors[colorMode].colorTextHover}`}
+                className={`${colors.colorText} h-9 w-9 group-hover:${colors.colorTextHover}`}
                 aria-hidden="true"
               />
             )}
@@ -279,7 +257,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
       </div>
       {showMobile && (
         <nav
-          className={`absolute ${colors[colorMode].bgMenu} w-full p-8 pt-2 rounded-b-md shadow-sm z-10 md:hidden`}
+          className={`absolute ${colors.bgMenu} w-full p-8 pt-2 rounded-b-md shadow-sm z-10 md:hidden`}
         >
           <ul>
             {allItems && allItems.map((item) => renderItemMobile({ ...item }))}
