@@ -2,7 +2,7 @@ module.exports = {
   purge: {
     content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     options: {
-      safelist: ['h-96', 'font-extrabold', 'text-3xl', 'my-12'],
+      safelist: ['h-96', 'font-extrabold', 'text-3xl', 'my-12', 'right-0'],
     },
   },
   darkMode: 'class', // or 'media' or 'class'
