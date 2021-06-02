@@ -1,7 +1,7 @@
 module.exports = {
   poweredByHeader: false,
   images: {
-    domains: ['por-navegantes.s3.amazonaws.com', 'avatars.githubusercontent.com'],
+    domains: ['por-navegantes.s3.amazonaws.com', 'avatars.githubusercontent.com', 'i.pinimg.com'],
   },
   future: {
     webpack5: true,
