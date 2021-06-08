@@ -27,7 +27,7 @@ export interface MenuProps {
     width?: number;
     height?: number;
   };
-  dark?: boolean;
+  isDark?: boolean;
   leftItems?: Array<LinkProps>;
   centerItems?: Array<LinkProps>;
   rightItems?: Array<LinkProps>;
@@ -47,7 +47,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
   }, [props.leftItems, props.centerItems, props.rightItems]);
 
   const colors = useMemo(() => {
-    const colorMode = props.dark ? "dark" : "default";
+    const colorMode = props.isDark ? "dark" : "default";
     const defaltColors = {
       dark: {
         bgMenu: "bg-gray-800",
@@ -63,14 +63,13 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
       },
     };
     return defaltColors[colorMode];
-  }, [props.dark]);
+  }, [props.isDark]);
 
   const renderLink = useCallback(
     (item: LinkProps) => {
       if (typeof item.href === "string" && item.href !== "") {
         return (
           <li
-            id="teste"
             key={item.id}
             className={`text-base py-2 font-medium group ${colors.colorText}`}
           >
