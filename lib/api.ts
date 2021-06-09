@@ -1,6 +1,6 @@
 import { ContentfulClientApi, createClient, EntryCollection } from "contentful";
 import { CONTENT_TYPES_IDS } from "./constants";
-import { TypePageFields } from "./types";
+import { TypePageFields, TypePostFields } from "./types";
 
 export const client = createClient({
   space: process.env.CF_SPACE_ID || "",
@@ -19,8 +19,20 @@ const getClient = (preview: boolean): ContentfulClientApi =>
 export async function getInitialProps(): Promise<
   EntryCollection<TypePageFields>
 > {
-  return await getClient(false).getEntries<TypePageFields>({
+  const landinPage = await getClient(false).getEntries<TypePageFields>({
     content_type: CONTENT_TYPES_IDS.LandingPage,
-    include: 5,
+    include: 10,
   });
+
+  return landinPage;
+}
+
+export async function getLastPosts(): Promise<EntryCollection<TypePostFields>> {
+  const posts = await getClient(false).getEntries<TypePostFields>({
+    content_type: CONTENT_TYPES_IDS.BlogPost,
+    include: 10,
+    limit: 10,
+  });
+
+  return posts;
 }

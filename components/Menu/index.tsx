@@ -7,14 +7,12 @@ import Dropdown from "./Dropdown";
 
 export interface LinkProps {
   id: string;
-  svgIcon?: string;
   href: string;
   title: string;
+  svgIcon?: string;
   description?: string;
   colorMode?: "dark" | "default";
   target?: "_blank" | "_self" | "_parent" | "_top" | string;
-  nextLink?: boolean;
-  element?: HTMLElement;
   items?: Array<LinkProps>;
 }
 

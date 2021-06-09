@@ -1,50 +1,49 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 
-import { getInitialProps } from "../lib/api";
+import { getInitialProps, getLastPosts } from "../lib/api";
 import Header from "./../components/Header";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
-import Menu, { LinkProps, MenuProps } from "../components/Menu";
+import Menu, { MenuProps } from "../components/Menu";
 import { AvatarProps } from "../components/Avatar";
 import { LinksBlockProps } from "../components/LinksBlock";
-// import Article from "../components/Article";
-// import PostType from "../types/post";
+import { TypePost } from "../lib/types";
+
 import {
-  TypeMenuFields,
-  TypeMenuItem,
-  TypeProfileFields,
-  TypeSocialBlockFields,
-} from "../lib/types";
+  avatarPropsConvert,
+  menuPropsConvert,
+  socialLinksPropsConvert,
+} from "../lib/convertTypes";
+import PostHero from "../components/PostHero";
 
 interface indexProps {
-  user: TypeProfileFields;
-  links: TypeSocialBlockFields;
-  menuData: TypeMenuFields;
-  // posts: PostType[];
+  user: {
+    avatar?: AvatarProps;
+    shortBio?: string;
+    longBio?: string;
+  };
+  socialLinks: LinksBlockProps;
+  menu: MenuProps;
+  posts: TypePost[];
 }
 
-const Home: React.FC<indexProps> = ({ user, links, menuData }) => {
+const Home: React.FC<indexProps> = ({ user, socialLinks, menu, posts }) => {
   const [avatar, setAvatar] = useState<AvatarProps | undefined>();
-  const [socialLinks, setSocialLinks] = useState<LinksBlockProps>();
-  const [menu, setMenu] = useState<MenuProps>({});
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = useCallback(() => {
-    // setShowModal((s) => !s);
-    setShowModal(false);
+    setShowModal((s) => !s);
   }, []);
 
   useEffect(() => {
     user &&
       user.avatar &&
       setAvatar({
-        ...avatarPropsConvert(user),
+        ...user.avatar,
         onCLick: handleModal,
       });
-    links && setSocialLinks({ ...socialLinksPropsConvert(links) });
-    menuData && setMenu({ ...menuPropsConvert(menuData) });
-  }, [user, links, menuData, handleModal]);
+  }, [user, handleModal]);
 
   return (
     <>
@@ -66,6 +65,20 @@ const Home: React.FC<indexProps> = ({ user, links, menuData }) => {
           <div className="w-full text-center my-12 font-extrabold text-3xl text-gray-800">
             Latest Articles
           </div>
+          {posts &&
+            posts.length > 0 &&
+            posts.map((post) => {
+              return (
+                <PostHero
+                  key={post.sys.id}
+                  title={post.fields.title}
+                  slug={post.fields.slug}
+                  heroImage={post.fields.heroImage}
+                  description={post.fields.description}
+                  tags={post.fields.tags}
+                />
+              );
+            })}
         </main>
 
         <Footer />
@@ -77,10 +90,14 @@ const Home: React.FC<indexProps> = ({ user, links, menuData }) => {
 
 type PropsType = {
   props: indexProps;
+  revalidate: number;
 };
+
+export default Home;
 
 export async function getStaticProps(): Promise<PropsType> {
   const initialProps = await getInitialProps();
+  const posts = await getLastPosts();
 
   const [data] = initialProps.items.map((page) => {
     const user = page.fields.profile.fields;
@@ -91,78 +108,14 @@ export async function getStaticProps(): Promise<PropsType> {
 
   return {
     props: {
-      user: data.user,
-      links: data.links,
-      menuData: data.menu,
+      user: {
+        ...data.user,
+        avatar: avatarPropsConvert(data.user),
+      },
+      socialLinks: socialLinksPropsConvert(data.links),
+      menu: menuPropsConvert(data.menu),
+      posts: posts.items,
     },
+    revalidate: 60,
   };
-}
-
-export default Home;
-
-function avatarPropsConvert(props: TypeProfileFields): AvatarProps {
-  const url = "https:" + props.avatar?.fields.file.url;
-  const newStories = props.avatarNews;
-  const alt = props.name;
-  const size = props.avatarSize;
-  const tag = props.avatarTag;
-
-  return { url, newStories, alt, size, tag };
-}
-
-function socialLinksPropsConvert(
-  props: TypeSocialBlockFields
-): LinksBlockProps {
-  const blockTitle = props.blockTitle;
-  const cssClassTitle = props.classCssTitle;
-  const direction = props.direction === "column" ? "column" : "row";
-  const showTitles = props.showTitle;
-  const links =
-    props.links &&
-    props.links.map((link) => {
-      return {
-        id: link.sys.id,
-        url: link.fields.url,
-        title: link.fields.title,
-        target: link.fields.target,
-        svgIcon: link.fields.svgIcon,
-        classCssTitle: link.fields.classCssTitle,
-        classCssLink: link.fields.classCssLink,
-        classCssIcon: link.fields.classCssIcon,
-      };
-    });
-
-  return { blockTitle, cssClassTitle, direction, showTitles, links };
-}
-
-function menuPropsConvert(props: TypeMenuFields): MenuProps {
-  const itemPropsConvert = (items: TypeMenuItem[]): LinkProps[] => {
-    return items.map((item) => {
-      return {
-        id: item.sys.id,
-        svgIcon: item.fields.svgIcon,
-        href: item.fields.href,
-        title: item.fields.title,
-        description: item.fields.description,
-        colorMode: isDark ? "dark" : "default",
-        target: item.fields.target,
-        items: item.fields.items && itemPropsConvert(item.fields.items),
-      };
-    });
-  };
-
-  const isDark = props.theme === "dark";
-  const logo = {
-    url: "https:" + props.logo?.fields.file.url,
-    alt: props.logo?.fields.description,
-    title: props.logo?.fields.title,
-    href: "/",
-    width: props.logo?.fields.file.details.image?.width,
-    height: props.logo?.fields.file.details.image?.height,
-  };
-  const leftItems = props.leftItems && itemPropsConvert(props.leftItems);
-  const centerItems = props.centerItems && itemPropsConvert(props.centerItems);
-  const rightItems = props.rightItems && itemPropsConvert(props.rightItems);
-
-  return { isDark, logo, leftItems, centerItems, rightItems };
 }

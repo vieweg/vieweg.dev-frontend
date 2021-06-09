@@ -3,6 +3,7 @@ export const CONTENT_TYPES_IDS = {
   Profile: "person",
   Menu: "appMenu",
   SocialLinks: "blockUserLinks",
+  BlogPost: "blogPost",
 };
 
 export const fallbackImage = {

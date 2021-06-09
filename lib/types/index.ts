@@ -5,3 +5,4 @@ export type { TypeProfile, TypeProfileFields } from "./TypeProfile";
 export type { TypeSeo, TypeSeoFields } from "./TypeSeo";
 export type { TypeSocialBlock, TypeSocialBlockFields } from "./TypeSocialBlock";
 export type { TypeSocialLinks, TypeSocialLinksFields } from "./TypeSocialLinks";
+export type { TypePost, TypePostFields } from "./TypePostBlog";
