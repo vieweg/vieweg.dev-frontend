@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { TypePostFields } from "../../lib/types";
+import { TypeArticleFields } from "../../lib/types";
 
-type PostHeroProps = Pick<
-  TypePostFields,
+type ArticleHeroProps = Pick<
+  TypeArticleFields,
   "heroImage" | "slug" | "title" | "description" | "tags" | "author"
 >;
 
-const PostHero: React.FC<PostHeroProps> = (props) => {
+const ArticleHero: React.FC<ArticleHeroProps> = (props) => {
   return (
     <article className="w-full  md:w-1/2 lg:w-1/3 xl:1/4 ">
       <div className="relative m-3 p-4 border border-solid border-gray-200 rounded-xl shadow-inner overflow-hidden">
@@ -56,4 +56,4 @@ const PostHero: React.FC<PostHeroProps> = (props) => {
   );
 };
 
-export default PostHero;
+export default ArticleHero;

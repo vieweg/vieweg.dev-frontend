@@ -4,11 +4,11 @@ import { MenuProps, LinkProps } from "../components/Menu";
 import {
   TypeMenuFields,
   TypeMenuItem,
-  TypeProfileFields,
+  TypeAuthorFields,
   TypeSocialBlockFields,
 } from "../lib/types";
 
-export function avatarPropsConvert(props: TypeProfileFields): AvatarProps {
+export function avatarPropsConvert(props: TypeAuthorFields): AvatarProps {
   const url = "https:" + props.avatar?.fields.file.url;
   const newStories = props.avatarNews;
   const alt = props.name;

@@ -1,6 +1,11 @@
-import { ContentfulClientApi, createClient, EntryCollection } from "contentful";
-import { CONTENT_TYPES_IDS } from "./constants";
-import { TypePageFields, TypePostFields } from "./types";
+import {
+  ContentfulClientApi,
+  createClient,
+  Entry,
+  EntryCollection,
+} from "contentful";
+import { CONTENT_TYPES_IDS, LANDINGPAGE_ID } from "./constants";
+import { TypeArticleFields, TypeLandingPageFields } from "./types";
 
 export const client = createClient({
   space: process.env.CF_SPACE_ID || "",
@@ -16,23 +21,46 @@ const previewClient = createClient({
 const getClient = (preview: boolean): ContentfulClientApi =>
   preview ? previewClient : client;
 
-export async function getInitialProps(): Promise<
-  EntryCollection<TypePageFields>
-> {
-  const landinPage = await getClient(false).getEntries<TypePageFields>({
-    content_type: CONTENT_TYPES_IDS.LandingPage,
-    include: 10,
-  });
-
+export async function getWebsiteInfo(): Promise<Entry<TypeLandingPageFields>> {
+  const landinPage = await getClient(false).getEntry<TypeLandingPageFields>(
+    LANDINGPAGE_ID,
+    {
+      include: 10,
+    }
+  );
   return landinPage;
 }
 
-export async function getLastPosts(): Promise<EntryCollection<TypePostFields>> {
-  const posts = await getClient(false).getEntries<TypePostFields>({
-    content_type: CONTENT_TYPES_IDS.BlogPost,
+interface GetArticlesProps {
+  [key: string]: string | number;
+}
+
+export async function getArticles(
+  args?: GetArticlesProps
+): Promise<EntryCollection<TypeArticleFields>> {
+  const query = {
     include: 10,
-    limit: 10,
-  });
+    order: "-sys.createdAt",
+    ...args,
+    content_type: CONTENT_TYPES_IDS.article,
+  };
+
+  const posts = await getClient(false).getEntries<TypeArticleFields>(query);
 
   return posts;
+}
+
+export async function getArticleBySlug(
+  slug: string
+): Promise<Entry<TypeArticleFields> | undefined> {
+  const articles = await getClient(false).getEntries<TypeArticleFields>({
+    content_type: CONTENT_TYPES_IDS.article,
+    "fields.slug": slug,
+  });
+
+  const entry = articles.items
+    .filter((item) => item.fields.slug === slug)
+    .pop();
+
+  return entry;
 }

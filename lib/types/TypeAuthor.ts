@@ -1,6 +1,6 @@
 import * as Contentful from "contentful";
 
-export interface TypeProfileFields {
+export interface TypeAuthorFields {
   name: Contentful.EntryFields.Symbol;
   title?: Contentful.EntryFields.Symbol;
   avatar?: Contentful.Asset;
@@ -13,4 +13,4 @@ export interface TypeProfileFields {
   phone?: Contentful.EntryFields.Symbol;
 }
 
-export type TypeProfile = Contentful.Entry<TypeProfileFields>;
+export type TypeAuthor = Contentful.Entry<TypeAuthorFields>;

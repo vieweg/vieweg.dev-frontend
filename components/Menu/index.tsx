@@ -231,7 +231,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
             </div>
           )}
           {props.rightItems && props.rightItems.length > 0 && (
-            <div className="flex-1">
+            <div>
               <ul className="flex flex-row space-x-6 justify-end focus:outline-none">
                 {props.rightItems.map((rightItem) => renderItem(rightItem))}
               </ul>

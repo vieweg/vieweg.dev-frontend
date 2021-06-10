@@ -1,10 +1,13 @@
 export const CONTENT_TYPES_IDS = {
-  LandingPage: "appLandingPage",
-  Profile: "person",
-  Menu: "appMenu",
-  SocialLinks: "blockUserLinks",
-  BlogPost: "blogPost",
+  landingPage: "appLandingPage",
+  socialLinks: "blockUserLinks",
+  menu: "appMenu",
+  author: "person",
+  article: "article",
+  category: "category",
 };
+
+export const LANDINGPAGE_ID = "7HTAPXfkOHtwjKoOrpA01";
 
 export const fallbackImage = {
   title: "Thumbnail placeholder",
