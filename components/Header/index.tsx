@@ -5,7 +5,7 @@ import LinksBlock, { LinksBlockProps } from "../LinksBlock";
 export interface HeaderProps {
   excerpt?: string;
   html?: string;
-  avatar?: AvatarProps | false;
+  avatar?: AvatarProps;
   links?: LinksBlockProps;
 }
 

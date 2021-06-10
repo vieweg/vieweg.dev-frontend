@@ -7,14 +7,12 @@ import Dropdown from "./Dropdown";
 
 export interface LinkProps {
   id: string;
-  svgIcon?: string;
   href: string;
   title: string;
+  svgIcon?: string;
   description?: string;
   colorMode?: "dark" | "default";
   target?: "_blank" | "_self" | "_parent" | "_top" | string;
-  nextLink?: boolean;
-  element?: HTMLElement;
   items?: Array<LinkProps>;
 }
 
@@ -27,7 +25,7 @@ export interface MenuProps {
     width?: number;
     height?: number;
   };
-  dark?: boolean;
+  isDark?: boolean;
   leftItems?: Array<LinkProps>;
   centerItems?: Array<LinkProps>;
   rightItems?: Array<LinkProps>;
@@ -47,7 +45,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
   }, [props.leftItems, props.centerItems, props.rightItems]);
 
   const colors = useMemo(() => {
-    const colorMode = props.dark ? "dark" : "default";
+    const colorMode = props.isDark ? "dark" : "default";
     const defaltColors = {
       dark: {
         bgMenu: "bg-gray-800",
@@ -63,14 +61,13 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
       },
     };
     return defaltColors[colorMode];
-  }, [props.dark]);
+  }, [props.isDark]);
 
   const renderLink = useCallback(
     (item: LinkProps) => {
       if (typeof item.href === "string" && item.href !== "") {
         return (
           <li
-            id="teste"
             key={item.id}
             className={`text-base py-2 font-medium group ${colors.colorText}`}
           >
@@ -234,7 +231,7 @@ const Menu: React.FC<MenuProps> = ({ ...props }) => {
             </div>
           )}
           {props.rightItems && props.rightItems.length > 0 && (
-            <div className="flex-1">
+            <div>
               <ul className="flex flex-row space-x-6 justify-end focus:outline-none">
                 {props.rightItems.map((rightItem) => renderItem(rightItem))}
               </ul>

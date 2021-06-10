@@ -8,11 +8,11 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import ReactMarkdown from "react-markdown";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getArticleBySlug, getArticles } from "../../lib/api";
-import { TypeArticle } from "../../lib/types";
+import { getArticleBySlug, getArticles } from "../lib/api";
+import { TypeArticle } from "../lib/types";
 // import Menu from "../../components/Menu";
-import CodeBlock from "../../components/CodeBlock";
-import Footer from "../../components/Footer";
+import CodeBlock from "../components/CodeBlock";
+import Footer from "../components/Footer";
 
 interface ArticleProps {
   article: TypeArticle;

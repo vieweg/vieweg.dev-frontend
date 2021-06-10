@@ -1,21 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Head from "next/head";
 
-import { getWebsiteInfo, getArticles } from "../lib/api";
-import Header from "./../components/Header";
-import Modal from "../components/Modal";
-import Footer from "../components/Footer";
-import Menu, { MenuProps } from "../components/Menu";
-import { AvatarProps } from "../components/Avatar";
-import { LinksBlockProps } from "../components/LinksBlock";
-import ArticleHero from "../components/ArticleHero";
-import { TypeArticle } from "../lib/types";
+import { getArticles, getWebsiteInfo } from "../../lib/api";
+import Modal from "../../components/Modal";
+import Footer from "../../components/Footer";
+import Menu, { MenuProps } from "../../components/Menu";
+import { AvatarProps } from "../../components/Avatar";
+import { LinksBlockProps } from "../../components/LinksBlock";
+import ArticleHero from "../../components/ArticleHero";
+import { TypeArticle } from "../../lib/types";
 
 import {
   avatarPropsConvert,
   menuPropsConvert,
   socialLinksPropsConvert,
-} from "../lib/convertTypes";
+} from "../../lib/convertTypes";
 
 interface indexProps {
   user: {
@@ -28,22 +27,12 @@ interface indexProps {
   articles: TypeArticle[];
 }
 
-const Home: React.FC<indexProps> = ({ user, socialLinks, menu, articles }) => {
-  const [avatar, setAvatar] = useState<AvatarProps | undefined>();
+const Home: React.FC<indexProps> = ({ user, menu, articles }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = useCallback(() => {
     setShowModal((s) => !s);
   }, []);
-
-  useEffect(() => {
-    user &&
-      user.avatar &&
-      setAvatar({
-        ...user.avatar,
-        onCLick: handleModal,
-      });
-  }, [user, handleModal]);
 
   return (
     <>
@@ -54,12 +43,6 @@ const Home: React.FC<indexProps> = ({ user, socialLinks, menu, articles }) => {
       </Head>
       <div>
         <Menu {...menu} />
-        <Header
-          avatar={avatar}
-          links={socialLinks}
-          html={user.longBio}
-          excerpt={user.shortBio}
-        />
 
         <main className="flex flex-row flex-1 justify-start flex-wrap pb-16">
           <div className="w-full text-center my-12 font-extrabold text-3xl text-gray-800">

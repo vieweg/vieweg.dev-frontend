@@ -1,26 +1,24 @@
-import React, { useCallback } from "react";
+import React, { useMemo } from "react";
 
 export interface LinksBlockProps {
   blockTitle?: string;
   cssClassTitle?: string;
   direction?: "column" | "row";
   showTitles?: boolean;
-  links: [
-    {
-      id: string;
-      url: string;
-      title: string;
-      target?: "_blank" | "_self";
-      svgIcon?: string;
-      classCssTitle?: string;
-      classCssLink?: string;
-      classCssIcon?: string;
-    }
-  ];
+  links: {
+    id: string;
+    url: string;
+    title: string;
+    target?: "_blank" | "_self" | string;
+    svgIcon?: string;
+    classCssTitle?: string;
+    classCssLink?: string;
+    classCssIcon?: string;
+  }[];
 }
 
 const defaults = {
-  cssClassTitle: "text-center text-xl font-bold mb-2",
+  ClassCssTitle: "text-center text-xl font-bold mb-2",
   links: {
     target: "_self",
     svgIcon:
@@ -32,7 +30,7 @@ const defaults = {
 };
 
 const LinksBlock: React.FC<LinksBlockProps> = (props) => {
-  const cssClassBlock = useCallback(() => {
+  const cssClassBlock = useMemo(() => {
     if (props.direction && props.direction === "column") {
       return "flex flex-col space-y-4 justify-start";
     }
@@ -45,16 +43,16 @@ const LinksBlock: React.FC<LinksBlockProps> = (props) => {
 
   return (
     <div className="my-4">
-      {props.blockTitle && (
+      {props.showTitles && (
         <div
           className={
-            props.cssClassTitle ? props.cssClassTitle : defaults.cssClassTitle
+            props.cssClassTitle ? props.cssClassTitle : defaults.ClassCssTitle
           }
         >
           {props.blockTitle}
         </div>
       )}
-      <div className={cssClassBlock()}>
+      <div className={cssClassBlock}>
         {props.links.map(
           ({
             id,
