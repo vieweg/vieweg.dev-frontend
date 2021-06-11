@@ -8,17 +8,19 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import ReactMarkdown from "react-markdown";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getArticleBySlug, getArticles } from "../../lib/api";
+import { getArticleBySlug, getArticles, getWebsiteInfo } from "../../lib/api";
 import { TypeArticle } from "../../lib/types";
-// import Menu from "../../components/Menu";
+import Menu, { MenuProps } from "../../components/Menu";
 import CodeBlock from "../../components/CodeBlock";
 import Footer from "../../components/Footer";
+import { menuPropsConvert } from "../../lib/convertTypes";
 
 interface ArticleProps {
   article: TypeArticle;
+  menu: MenuProps;
 }
 
-const Article: React.FC<ArticleProps> = ({ article }) => {
+const Article: React.FC<ArticleProps> = ({ article, menu }) => {
   const router = useRouter();
 
   if (!router.isFallback && !article) {
@@ -37,8 +39,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         {/**<meta name="description" content={user.excerpt} />**/}
       </Head>
       <div>
-        {/**<Menu {...menu} />**/}
-
+        <Menu {...menu} />
         <main className="flex flex-row flex-1 w-full my-12 justify-start flex-wrap pb-16">
           <div className="my-12 w-full px-6">
             {article.fields.heroImage && (
@@ -93,10 +94,12 @@ export default Article;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (params && typeof params.slug === "string") {
+    const websiteInfo = await getWebsiteInfo();
     const article = await getArticleBySlug(params.slug);
     if (article) {
       return {
         props: {
+          menu: menuPropsConvert(websiteInfo.fields.mainMenu.fields),
           article,
         },
       };

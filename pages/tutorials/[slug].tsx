@@ -8,22 +8,22 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import ReactMarkdown from "react-markdown";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getPageBySlug, getPages, getWebsiteInfo } from "../lib/api";
-import { TypePage } from "../lib/types";
-import Menu, { MenuProps } from "../components/Menu";
-import CodeBlock from "../components/CodeBlock";
-import Footer from "../components/Footer";
-import { menuPropsConvert } from "../lib/convertTypes";
+import { getTutorialBySlug, getTutorials, getWebsiteInfo } from "../../lib/api";
+import { TypeTutorial } from "../../lib/types";
+import Menu, { MenuProps } from "../../components/Menu";
+import CodeBlock from "../../components/CodeBlock";
+import Footer from "../../components/Footer";
+import { menuPropsConvert } from "../../lib/convertTypes";
 
-interface PageProps {
-  page: TypePage;
+interface ArticleProps {
+  tutorial: TypeTutorial;
   menu: MenuProps;
 }
 
-const Page: React.FC<PageProps> = ({ page, menu }) => {
+const Tutorial: React.FC<ArticleProps> = ({ tutorial, menu }) => {
   const router = useRouter();
 
-  if (!router.isFallback && !page) {
+  if (!router.isFallback && !tutorial) {
     return <ErrorPage statusCode={404} />;
   }
 
@@ -42,20 +42,36 @@ const Page: React.FC<PageProps> = ({ page, menu }) => {
         <Menu {...menu} />
         <main className="flex flex-row flex-1 w-full my-12 justify-start flex-wrap pb-16">
           <div className="my-12 w-full px-6">
-            {page.fields.heroImage && (
+            {tutorial.fields.heroImage && (
               <div className="hidden sm:block relative mb-12 h-96 mx-auto">
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  src={`https:${page.fields.heroImage.fields.file.url}?h=250&w=1200&fit=fill`}
-                  alt={page.fields.title}
+                  src={`https:${tutorial.fields.heroImage.fields.file.url}?h=250&w=1200&fit=fill`}
+                  alt={tutorial.fields.title}
                 />
               </div>
             )}
             <div className="flex flex-row flex-wrap justify-between mx-auto max-w-fit">
-              <article className="prose prose-red w-full sm:max-w-75ch text-lg leading-normal font-normal">
+              <div className="sm:border-r sm:border-gray-200 mr-6 pr-6">
+                <h3 className="text-2xl text-left font-bold">Tutorial Parts</h3>
+                <hr />
+                <ul className="my-4 space-y-2">
+                  <li>
+                    <Link href="/">
+                      <a className="text-indigo-600">Tutorial start</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/">
+                      <a className="text-indigo-600">Tutorial start</a>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <article className="prose prose-indigo w-full sm:max-w-75ch text-lg leading-normal font-normal">
                 <h1 className="text-6xl my-12 text-center text-blue-900">
-                  {page.fields.title}
+                  {tutorial.fields.title}
                 </h1>
                 <ReactMarkdown
                   rehypePlugins={[
@@ -64,41 +80,29 @@ const Page: React.FC<PageProps> = ({ page, menu }) => {
                   ]}
                   components={{ code: CodeBlock }}
                 >
-                  {page.fields.body || ""}
+                  {tutorial.fields.body || ""}
                 </ReactMarkdown>
               </article>
-              <div className="sm:border-l sm:border-gray-200 ml-6 pl-6">
-                <h3 className="text-2xl text-right font-bold">Related Items</h3>
-                <hr />
-                <ul className="my-4 space-y-2">
-                  <li>
-                    <Link href="/">
-                      <a className="text-indigo-600">Item related 1</a>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </main>
-
         <Footer />
       </div>
     </>
   );
 };
 
-export default Page;
+export default Tutorial;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (params && typeof params.slug === "string") {
     const websiteInfo = await getWebsiteInfo();
-    const page = await getPageBySlug(params.slug);
-    if (page) {
+    const tutorial = await getTutorialBySlug(params.slug);
+    if (tutorial) {
       return {
         props: {
           menu: menuPropsConvert(websiteInfo.fields.mainMenu.fields),
-          page,
+          tutorial,
         },
       };
     }
@@ -110,9 +114,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pages = await getPages();
+  const tutorials = await getTutorials();
 
-  const paths = pages.items.map((item) => ({
+  const paths = tutorials.items.map((item) => ({
     params: { slug: item.fields.slug },
   }));
 

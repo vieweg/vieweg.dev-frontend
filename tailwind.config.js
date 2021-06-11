@@ -21,7 +21,7 @@ module.exports = {
       'fit': 'fit-content',
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
+      sans: ['Roboto', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
     },
   },

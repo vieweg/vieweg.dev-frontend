@@ -1,9 +1,11 @@
 export const CONTENT_TYPES_IDS = {
+  article: "article",
+  page: "page",
+  tutorial: "tutorial",
   landingPage: "appLandingPage",
   socialLinks: "blockUserLinks",
   menu: "appMenu",
   author: "person",
-  article: "article",
   category: "category",
 };
 

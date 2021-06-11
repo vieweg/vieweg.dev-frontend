@@ -72,10 +72,12 @@ const Home: React.FC<indexProps> = ({ user, socialLinks, menu, articles }) => {
                 <ArticleHero
                   key={article.sys.id}
                   title={article.fields.title}
-                  slug={article.fields.slug}
+                  slug={`/articles/${article.fields.slug}`}
                   heroImage={article.fields.heroImage}
                   description={article.fields.description}
                   tags={article.fields.tags}
+                  author={article.fields.author}
+                  createdAt={article.sys.createdAt}
                 />
               );
             })}
