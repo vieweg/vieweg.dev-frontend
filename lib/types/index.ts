@@ -6,3 +6,5 @@ export type { TypeSeo, TypeSeoFields } from "./TypeSeo";
 export type { TypeSocialBlock, TypeSocialBlockFields } from "./TypeSocialBlock";
 export type { TypeSocialLinks, TypeSocialLinksFields } from "./TypeSocialLinks";
 export type { TypeArticle, TypeArticleFields } from "./TypeArticle";
+export type { TypeTutorial, TypeTutorialFields } from "./TypeTutorial";
+export type { TypePage, TypePageFields } from "./TypePage";

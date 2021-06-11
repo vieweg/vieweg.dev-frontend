@@ -1,45 +1,27 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import Head from "next/head";
 
 import { getArticles, getWebsiteInfo } from "../../lib/api";
-import Modal from "../../components/Modal";
 import Footer from "../../components/Footer";
 import Menu, { MenuProps } from "../../components/Menu";
-import { AvatarProps } from "../../components/Avatar";
-import { LinksBlockProps } from "../../components/LinksBlock";
+
 import ArticleHero from "../../components/ArticleHero";
 import { TypeArticle } from "../../lib/types";
 
-import {
-  avatarPropsConvert,
-  menuPropsConvert,
-  socialLinksPropsConvert,
-} from "../../lib/convertTypes";
+import { menuPropsConvert } from "../../lib/convertTypes";
 
 interface indexProps {
-  user: {
-    avatar?: AvatarProps;
-    shortBio?: string;
-    longBio?: string;
-  };
-  socialLinks: LinksBlockProps;
   menu: MenuProps;
   articles: TypeArticle[];
 }
 
-const Home: React.FC<indexProps> = ({ user, menu, articles }) => {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleModal = useCallback(() => {
-    setShowModal((s) => !s);
-  }, []);
-
+const Articles: React.FC<indexProps> = ({ menu, articles }) => {
   return (
     <>
       <Head>
         <title>I&apos;m Rafael Vieweg</title>
         <link rel="icon" href="/favicon.png" />
-        <meta name="description" content={user.shortBio} />
+        <meta name="description" content="" />
       </Head>
       <div>
         <Menu {...menu} />
@@ -55,10 +37,12 @@ const Home: React.FC<indexProps> = ({ user, menu, articles }) => {
                 <ArticleHero
                   key={article.sys.id}
                   title={article.fields.title}
-                  slug={article.fields.slug}
+                  slug={`/articles/${article.fields.slug}`}
                   heroImage={article.fields.heroImage}
                   description={article.fields.description}
                   tags={article.fields.tags}
+                  author={article.fields.author}
+                  createdAt={article.sys.createdAt}
                 />
               );
             })}
@@ -66,7 +50,6 @@ const Home: React.FC<indexProps> = ({ user, menu, articles }) => {
 
         <Footer />
       </div>
-      <Modal showModal={showModal} onClose={handleModal} />
     </>
   );
 };
@@ -76,7 +59,7 @@ type PropsType = {
   revalidate: number;
 };
 
-export default Home;
+export default Articles;
 
 export async function getStaticProps(): Promise<PropsType> {
   const websiteInfo = await getWebsiteInfo();
@@ -87,13 +70,6 @@ export async function getStaticProps(): Promise<PropsType> {
 
   return {
     props: {
-      user: {
-        ...websiteInfo.fields.author.fields,
-        avatar: avatarPropsConvert(websiteInfo.fields.author.fields),
-      },
-      socialLinks: socialLinksPropsConvert(
-        websiteInfo.fields.socialLinks.fields
-      ),
       menu: menuPropsConvert(websiteInfo.fields.mainMenu.fields),
       articles: articles.items,
     },
